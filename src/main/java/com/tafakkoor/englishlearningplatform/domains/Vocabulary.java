@@ -34,7 +34,7 @@ public class Vocabulary implements BaseEntity {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean deleted;
 
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     @Column(nullable = false)
     private Integer createdBy;

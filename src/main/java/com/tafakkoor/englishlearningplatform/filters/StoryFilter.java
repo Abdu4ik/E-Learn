@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Log
-@WebFilter(filterName = "StoryFilter", urlPatterns = {"/admin/story/add"})
+@WebFilter(filterName = "StoryFilter", urlPatterns = {"/teacher/story/add"})
 @MultipartConfig
 public class StoryFilter implements Filter {
 
@@ -32,9 +32,10 @@ public class StoryFilter implements Filter {
             } catch (Exception e) {
                 List<Levels> levels = List.of(Levels.values());
                 request.setAttribute("levels", levels);
-                request.getRequestDispatcher("/views/adminview/story-add.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/teacher/story/story-add.jsp").forward(request, response);
             }
         } else {
+            System.out.println("Post method emas");
             List<Levels> levels = List.of(Levels.values());
             request.setAttribute("levels", levels);
             chain.doFilter(req, res);

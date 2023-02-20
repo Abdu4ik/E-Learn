@@ -39,7 +39,7 @@ public class Story implements BaseEntity {
     private Levels level;
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean deleted;
-    @Column(nullable = false)  // TODO: 2/18/2023 CascadeType.MERGE qilish kerak bo'lmasa PersistentObjectException chiqadi
+    @Column(nullable = false)
     private Integer createdBy;
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

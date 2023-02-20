@@ -1,8 +1,10 @@
 package com.tafakkoor.englishlearningplatform.servlets.user;
 
+import com.google.gson.Gson;
 import com.tafakkoor.englishlearningplatform.dao.QuestionDAO;
 import com.tafakkoor.englishlearningplatform.dao.VariantDAO;
 import com.tafakkoor.englishlearningplatform.domains.Questions;
+import com.tafakkoor.englishlearningplatform.domains.QuizHelper;
 import com.tafakkoor.englishlearningplatform.domains.Variants;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -12,41 +14,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet( name = "TakeGrammarTestServlet", value = "/grammar/test" )
+@WebServlet(name = "TakeGrammarTestServlet", value = "/grammar/test")
 public class TakeGrammarTestServlet extends HttpServlet {
     @Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        QuestionDAO questionDAO = QuestionDAO.getInstance();
-        VariantDAO variantDAO = VariantDAO.getInstance();
-        String grammarId = request.getParameter("grammarId");
-
-        List<Variants> variantList = new ArrayList<>();
-        try {
-            int id = Integer.parseInt(grammarId);
-            List<Questions> questionsList = questionDAO.findAllByGrammarId(id);
-            request.setAttribute("grammarId",grammarId);
-            for ( Questions questions : questionsList ) {
-                for ( Variants variants : variantDAO.findAllByQuestionId(questions.getId()) ) {
-                    variantList.add(variants);
-                }
-            }
-            request.setAttribute("questionList", questionsList);
-            request.setAttribute("variantList",variantList);
-            request.getRequestDispatcher("/views/user/take_grammar_test.jsp").forward(request, response);
-        } catch ( NumberFormatException e ) {
-            System.out.println("Numberformat exception!");
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+//        Integer userId = Integer.parseInt(AES.decrypt(cookie.getValue()));
+       // request.setAttribute("userId", userId);
+      //  Integer grammarId=Integer.parseInt(String.valueOf(request.getAttribute("grammarId")));
+        request.setAttribute("grammarId", "1");
+        request.getRequestDispatcher("/views/user/take_grammar_test.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        QuestionDAO questionDAO = QuestionDAO.getInstance();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // get request body
+//        String requestBody = request.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
+//        System.out.println(requestBody);
         String grammarId = request.getParameter("grammarId");
-        List<Questions> allQuestions = questionDAO.findAllByGrammarId(Integer.parseInt(grammarId));
-        for ( Questions question : allQuestions ) {
-            request.getParameter(String.valueOf(question.getId()));
-        }
-        request.getRequestDispatcher("/views/user/take_grammar_test.jsp").forward(request,response);
+        HttpSession session = request.getSession();
+//        Integer userId = Integer.parseInt(AES.decrypt(cookie.getValue()));
+   //     String userId = request.getParameter("userId");
+        String choice = request.getParameter("choice");
+        String questionId = request.getParameter("questionId");
+        System.out.println("grammar id:"+grammarId+"choice: "+choice+"questionId: "+questionId);
+        request.setAttribute("grammarId", grammarId);
+  //      request.setAttribute("userId", userId);
+        request.getRequestDispatcher("/views/user/take_grammar_test.jsp").forward(request, response);
     }
 
 }

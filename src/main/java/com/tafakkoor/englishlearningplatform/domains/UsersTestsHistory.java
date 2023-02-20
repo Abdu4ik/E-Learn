@@ -1,5 +1,6 @@
 package com.tafakkoor.englishlearningplatform.domains;
 
+import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class UsersTestsHistory {
+public class UsersTestsHistory implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
