@@ -1,4 +1,4 @@
-package com.tafakkoor.englishlearningplatform.servlets.teacher.story;
+package com.tafakkoor.englishlearningplatform.servlets.teacher;
 
 import com.tafakkoor.englishlearningplatform.dao.StoryDAO;
 import com.tafakkoor.englishlearningplatform.dao.UserDAO;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-@WebServlet(name = "StoryAddServlet", value = "/teacher/story/add")
+@WebServlet(name = "StoryAddServlet", value = "/admin/story/add")
 @MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\English-Learning-Platform\\src\\main\\resources\\files")
 public class StoryAddServlet extends HttpServlet {
     public static final String projectPath = System.getProperty("user.dir");
@@ -83,7 +83,8 @@ public class StoryAddServlet extends HttpServlet {
 
 
         StoryDAO.getInstance().save(story);
-        CompletableFuture.runAsync(() -> {
+        Document savedStoryDocument = story.getDocument();
+//        CompletableFuture.runAsync(() -> {
             VocabularyDAO vocabularyDAO = VocabularyDAO.getInstance();
             try {
                 for (int i = 0; i < enOptions.length; i++) {
@@ -99,8 +100,7 @@ public class StoryAddServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
-        response.sendRedirect("/teacher/story/list");
+//        });
     }
 //    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        Part file = request.getPart("file");

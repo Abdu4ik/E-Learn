@@ -1,16 +1,18 @@
-package com.tafakkoor.englishlearningplatform.servlets.teacher;
+package com.tafakkoor.englishlearningplatform.servlets.user;
 
+import com.tafakkoor.englishlearningplatform.utils.Utils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "TeacherServlet", value = "/teacher")
-public class TeacherServlet extends HttpServlet {
+@WebServlet(name = "UserHomServlet", value = "/user")
+public class UserHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/views/teacher/main.jsp").forward(request, response);
+        request.getSession().setAttribute("hasCookie", Utils.checkCookie(request));
+        request.getRequestDispatcher("/views/user/index.jsp").forward(request, response);
     }
 
     @Override

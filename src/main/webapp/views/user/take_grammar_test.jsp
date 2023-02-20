@@ -1,8 +1,5 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.Variants" %>
-<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.ReadStoryServlet.ReadStoryServlet" %>
-<%@ page import="com.google.gson.Gson" %>
-<%@ page import="com.tafakkoor.englishlearningplatform.domains.QuizHelper" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -32,112 +29,55 @@
     <title>Grammar Test</title>
 
 </head>
-<style>
+<body>
 
-    * {
-        box-sizing: border-box;
-    }
+<section class="vh-100 gradient-custom" style="margin-bottom: 20px">
+    <div class="container py-5 h-75">
+        <div class="row d-flex justify-content-center align-items-center h-75">
+            <div class="card bg-dark text-white " style="border-radius: 1rem; margin-bottom: 25px;margin-top: 10px">
+                <form class="card-body p-5 text-center" method="post" action="/grammar/test">
+                    <input name="grammarId" value="${grammarId}" type="hidden">
+                    <table class="table table-light table-borderless border-primary">
+                        <thead class="table-danger">
+                        <tr>
+                            <th scope="col">Questions</th>
+                            <th colspan="4" scope="colgroup"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-    body {
-        background-color: #b8c6db;
-        background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7f7 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        overflow: hidden;
-        margin: 0;
-    }
+                        <c:forEach items="${questionList}" var="question">
+                            <tr>
+                                <th scope="col">${question.getTitle()}</th>
+                                <c:forEach items="${variantList}" var="variant">
+                                    <c:if test="${variant.getQuestions().getId() == question.getId()}">
+                                        <td>
 
-    .quiz-container {
-        background-color: #fff;
-        box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
-        width: 600px;
-        overflow: hidden;
-        text-decoration-color: black;
-    }
-
-    .quiz-header {
-        padding: 4rem;
-    }
-
-    h2 {
-        padding: 1rem;
-        text-align: center;
-        margin: 0;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    ul li {
-        font-size: 1.2rem;
-        margin: 1rem 0;
-    }
-
-    ul li label {
-        cursor: pointer;
-    }
-
-    button {
-        background-color: #03cae4;
-        color: #fff;
-        border: none;
-        display: block;
-        width: 100%;
-        cursor: pointer;
-        font-size: 1.1rem;
-        font-family: inherit;
-        padding: 1.3rem;
-    }
-
-    button:hover {
-        background-color: #04adc4;
-    }
-
-    button:focus {
-        outline: none;
-        background-color: #44b927;
-    }
-</style>
-<body id="body" onload="quizData()">
-<form method="post">
-    <div class="quiz-container" id="quiz">
-        <div class="quiz-header">
-            <h2 id="question">Question Text <input type="hidden" name="questionId" id="questionId"></h2>
-            <ul>
-                <li>
-                    <input type="radio" name="answer" id="a" class="answer">
-                    <label for="a" id="a_text">Answer</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="b" class="answer">
-                    <label for="b" id="b_text">Answer</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="c" class="answer">
-                    <label for="c" id="c_text">Answer</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="d" class="answer">
-                    <label for="d" id="d_text">Answer</label>
-                </li>
-            </ul>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="${question.getId()}"
+                                                       id="${question.getId()}"/>
+                                                <label class="form-check-label"
+                                                       for="${question.getId()}">${variant.getVariant()}</label>
+                                            </div>
+                                        </td>
+                                    </c:if>
+                                </c:forEach>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2"  style="margin-bottom: 25px">
+                        <button href="http://localhost:8080/grammar/test" class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <input type="hidden" id="grammar_id" name="grammarId" value="${grammarId}">
-        <input type="hidden" id="choice" name="choice" value="">
-        <input type="hidden" id="current_quiz"  value="0">
-        <button id="submit" type="submit">Submit</button>
-
     </div>
+</section>
 
-
-    <script>
-        <jsp:include page="js/practise/quiz.js"></jsp:include>
-    </script>
-</form>
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+></script>
 </body>
 </html>

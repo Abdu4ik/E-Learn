@@ -1,11 +1,17 @@
 package com.tafakkoor.englishlearningplatform.dao;
 
 import com.tafakkoor.englishlearningplatform.domains.Story;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
+
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoryDAO extends BaseDAO<Story, Integer> {
     private static final ThreadLocal<StoryDAO> storyDAOThreadLocal = ThreadLocal.withInitial(StoryDAO::new);
@@ -24,10 +30,4 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
     }
 
 
-    public List<Story> findAllStories() {
-        begin();
-        TypedQuery<Story> query = em.createQuery("from Story s where s.deleted=false order by createdAt desc", Story.class);
-        commit();
-        return query.getResultList();
-    }
 }

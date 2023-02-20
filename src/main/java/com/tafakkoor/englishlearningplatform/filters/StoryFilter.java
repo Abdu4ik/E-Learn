@@ -24,7 +24,6 @@ public class StoryFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        System.out.println();
         if (req.getMethod().equalsIgnoreCase("post")) {
             StoryAddValidator validator = StoryAddValidator.getInstance();
             try {
@@ -36,7 +35,6 @@ public class StoryFilter implements Filter {
                 request.getRequestDispatcher("/views/adminview/story-add.jsp").forward(request, response);
             }
         } else {
-            System.out.println("Post method emas");
             List<Levels> levels = List.of(Levels.values());
             request.setAttribute("levels", levels);
             chain.doFilter(req, res);

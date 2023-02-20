@@ -1,12 +1,13 @@
 package com.tafakkoor.englishlearningplatform.domains;
 
+import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
 import com.tafakkoor.englishlearningplatform.enums.Roles;
 import com.tafakkoor.englishlearningplatform.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
-
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,15 +16,14 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 @Builder
 @AllArgsConstructor
 
-public class Users {
+public class Users implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
@@ -40,22 +40,32 @@ public class Users {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Status status = Status.ACTIVE;
+    @Column(unique = true, nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "integer default 0")
     @Builder.Default
     private Integer lastTestID = 0;
     private LocalDate birthDate;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean gender;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "integer default 0")
     @Builder.Default
     private Integer score = 0;
+    @CreationTimestamp
     @Column(nullable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean deleted;
+
+   
+
+    
+    private Users() {
+        
+    }
+
 
     @Override
     public boolean equals(Object o) {

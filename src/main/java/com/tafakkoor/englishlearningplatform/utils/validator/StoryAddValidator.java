@@ -4,6 +4,7 @@ import com.tafakkoor.englishlearningplatform.enums.Levels;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,18 @@ public class StoryAddValidator {
     }
 
     public static final List<Levels> LEVELS = List.of(Levels.values());
+
     public void validate(HttpServletRequest request) throws Exception {
+
+
+        String[] enOptions = request.getParameterValues("en_options[]");
+        String[] uzOptions = request.getParameterValues("uz_options[]");
+
+
+        System.out.println("enOptions = " + Arrays.toString(enOptions));
+        System.out.println("uzOptions = " + Arrays.toString(uzOptions));
+        checkOptions(uzOptions, enOptions);
+
         String level = request.getParameter("level");
         checkParam(level);
         checkParam(request.getParameter("title"));
@@ -48,18 +60,35 @@ public class StoryAddValidator {
             throw new Exception("Score must be a number");
         }
         Part file = request.getPart("file");
-        if (file.getSize()>0) {
+        if (file.getSize() > 0) {
             String fileName = file.getSubmittedFileName();
             if (!fileName.endsWith(".pdf")) {
                 throw new Exception("File must be a pdf");
             }
-        }else {
+        } else {
             throw new Exception("File is empty");
         }
     }
+
     private void checkParam(String param) throws Exception {
         if (Objects.isNull(param) || param.isEmpty() || param.isBlank()) {
             throw new Exception("Param is null or empty");
+        }
+    }
+    private void checkOptions(String[] uzOptions, String[] enOptions) throws Exception {
+        if (Objects.isNull(uzOptions) || Objects.isNull(enOptions) || uzOptions.length != enOptions.length) {
+            throw new Exception("Options are null or does not match");
+        }
+
+        for (int i = 0; i < uzOptions.length; i++) {
+            if (Objects.isNull(uzOptions[i]) ||
+                    Objects.isNull(enOptions[i]) ||
+                    uzOptions[i].isEmpty() ||
+                    enOptions[i].isEmpty() ||
+                    uzOptions[i].isBlank() ||
+                    enOptions[i].isBlank()) {
+                throw new Exception("Options are null or empty");
+            }
         }
     }
 }

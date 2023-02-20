@@ -23,9 +23,9 @@ public class Questions implements BaseEntity {
     private Integer id;
     @Column( nullable = false )
     private String title;
-//    @JoinColumn( nullable = false )
-//    @ManyToOne( cascade = CascadeType.ALL )
-//    private Grammar grammar;
+    @JoinColumn( nullable = false )
+    @ManyToOne( cascade = CascadeType.ALL )
+    private Grammar grammar;
 
 
     @Override

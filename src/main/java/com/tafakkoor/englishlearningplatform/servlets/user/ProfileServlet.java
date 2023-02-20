@@ -6,11 +6,11 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "UserHomServlet", value = "/user")
-public class UserHomServlet extends HttpServlet {
+@WebServlet(name = "ProfileServlet", value = "/profile")
+public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/views/user/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/user/account-setting/profile.jsp").forward(request, response);
     }
 
     @Override

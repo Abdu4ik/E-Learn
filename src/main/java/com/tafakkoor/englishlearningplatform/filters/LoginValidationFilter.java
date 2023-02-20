@@ -1,11 +1,15 @@
 package com.tafakkoor.englishlearningplatform.filters;
 
+import com.tafakkoor.englishlearningplatform.utils.validator.UserValidator;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 @WebFilter(filterName = "LoginValidationFilter", urlPatterns = {"/login"})
 public class LoginValidationFilter implements Filter {
     @Override
@@ -13,56 +17,29 @@ public class LoginValidationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String loginUsername = req.getParameter("in_username");
-        String loginPassword = req.getParameter("in_password");
+        String username = req.getParameter("in_username");
+        String password = req.getParameter("in_password");
 
-        String username = req.getParameter("username");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirm_password");
+        if (req.getMethod().equalsIgnoreCase("post")) {
+            Map<String, String> errors = new HashMap<>();
 
-        if (isFilled(username, email, password, confirmPassword) && isFilled(loginUsername, loginPassword)) {
-            req.setAttribute("too_many_fields_error", "You can't fill the fields both in login and register!");
-            req.getRequestDispatcher("views/authorization/login.jsp").forward(req, res);
-        } else if (isFilled(username, email, password, confirmPassword) && !isFilled(loginUsername, loginPassword)) {
-            if (!password.equals(confirmPassword)) {
-                req.setAttribute("pass_conf_err", "Passwords don't match!");
-                req.setAttribute("page", "up");
-                req.getRequestDispatcher("views/authorization/login.jsp").forward(req, res);
-            } else {
-                req.setAttribute("message", "register");
-                chain.doFilter(request, response);
+            if (username == null || username.isBlank()) {
+                errors.put("username_error", "Username can not be null");
             }
-        } else if (isFilled(loginUsername, loginPassword) && !isFilled(username, email, password, confirmPassword)) {
-            req.setAttribute("message", "login");
-            chain.doFilter(request, response);
+
+            if (password == null || password.isBlank()) {
+                errors.put("password_error", "Password can not be null");
+            }
+
+            if (errors.isEmpty()) {
+                chain.doFilter(request, response);
+            } else {
+                UserValidator.setErrorAttributes(req, errors);
+                req.getRequestDispatcher("views/authorization/login.jsp").forward(req, res);
+            }
         } else {
-            req.setAttribute("fields_not_filled_err", "Please fill the fields!");
-            req.getRequestDispatcher("views/authorization/login.jsp").forward(req, res);
+            chain.doFilter(request, response);
         }
 
-    }
-    // check if all fields are filled
-    public static boolean isFilled(String username, String email, String password, String confirmPassword) {
-        if (username == null || username.isEmpty()) {
-            return false;
-        } else if (email == null || email.isEmpty()) {
-            return false;
-        } else if (password == null || password.trim().isEmpty()) {
-            return false;
-        } else if (confirmPassword == null || confirmPassword.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
-    //check if the username and password is filled
-    public static boolean isFilled(String username, String password) {
-        if (username == null || username.isEmpty()) {
-            return false;
-        } else if (password == null || password.trim().isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
     }
 }

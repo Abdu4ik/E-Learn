@@ -1,11 +1,9 @@
 package com.tafakkoor.englishlearningplatform.domains;
 
-import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,8 +16,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 
 @AllArgsConstructor
-@Builder
-public class Grammar implements BaseEntity {
+public class Grammar{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,13 +29,11 @@ public class Grammar implements BaseEntity {
     @Column(nullable = false)
     private Integer score;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private Levels level;
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean deleted;
     @Column(nullable = false)
     private Integer createdBy;
-    @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
