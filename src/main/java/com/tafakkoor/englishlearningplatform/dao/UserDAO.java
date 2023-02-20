@@ -3,6 +3,7 @@ package com.tafakkoor.englishlearningplatform.dao;
 import com.tafakkoor.englishlearningplatform.domains.Users;
 import com.tafakkoor.englishlearningplatform.enums.Roles;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -49,9 +50,13 @@ public class UserDAO extends BaseDAO<Users, Long> {
     }
 
     public Users findByUsername(String username) {
-        return em.createQuery("select u from Users u where u.username = :username", Users.class)
-                .setParameter("username", username)
-                .getSingleResult();
+        try {
+            return em.createQuery("select u from Users u where u.username = :username", Users.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 }
