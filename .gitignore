@@ -4,12 +4,12 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/
-src/test/
+.idea
+src/test
 *.iws
 *.iml
 *.ipr
-.mvn/
+.mvn
 
 
 ### Eclipse ###
