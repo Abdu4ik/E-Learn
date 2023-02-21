@@ -6,9 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoryDAO extends BaseDAO<Story, Integer> {
-    private static final ThreadLocal<StoryDAO> storyDAOThreadLocal = ThreadLocal.withInitial(StoryDAO::new);
 
     public List<Story> getPage(int page, int size) {
         begin();
@@ -17,10 +15,6 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
         query.setMaxResults(size);
         commit();
         return query.getResultList();
-    }
-
-    public static StoryDAO getInstance() {
-        return storyDAOThreadLocal.get();
     }
 
 

@@ -72,40 +72,10 @@
 </head>
 <body style="background-color: whitesmoke">
 
-<h1 class="text-center" style="margin-top: 30px; margin-bottom: 30px">Fill in the form to add new topic</h1>
+<h1 class="text-center" style="margin-top: 30px; margin-bottom: 30px">Enter new question</h1>
+<h4 style="text-align: center">Add question related to the topic</h4>
 
 <form class="row g-3" method="post" enctype="multipart/form-data">
-    <div class="col-md-5 offset-1">
-        <label for="validationServer01" class="form-label">Topic title</label>
-        <input type="text" class="form-control is-valid" id="validationServer01" name="title"
-               placeholder="Enter title of the new topic " required>
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-    </div>
-
-    <div class="col-md-4 offset-1">
-        <label for="validationServer03" class="form-label">Points</label>
-        <input type="number" class="form-control is-valid" id="validationServer03" name="score"
-               placeholder="enter points" required>
-    </div>
-
-
-    <div class="col-md-4 offset-1">
-        <label for="validationServer04" class="form-label">Select level</label>
-        <select name="level" id="validationServer04" required>
-            <c:forEach items="${levels}" var="level">
-                <option value="${level}">${level}</option>
-            </c:forEach>
-        </select>
-    </div>
-    <div class="col-md-3 offset-1">
-        <label for="file" class="form-label">Upload the PDF file of the theme</label>
-        <input type="file" class="form-control" id="file" name="file" aria-label="file example" required>
-        <div class="invalid-feedback">Example invalid form file feedback</div>
-    </div>
-
-    <h4 style="text-align: center">Add question related to the topic</h4>
 
     <div class="wrapper" style="background-color: white">
 

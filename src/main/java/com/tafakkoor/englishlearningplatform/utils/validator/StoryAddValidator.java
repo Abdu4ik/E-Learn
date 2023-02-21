@@ -42,8 +42,8 @@ public class StoryAddValidator {
         checkParam(score);
         try {
             int point = Integer.parseInt(score);
-            if (point < 0 || point > 5) {
-                throw new Exception("Score must be between 0 and 5");
+            if (point < 0 || point > 50) {
+                throw new Exception("Score must be between 0 and 50");
             }
         } catch (NumberFormatException e) {
             throw new Exception("Score must be a number");
