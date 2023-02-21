@@ -50,4 +50,13 @@ public class Utils {
         }
         return null;
     }
+
+    public static void removeCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("remember_me")) {
+                cookie.setMaxAge(0);
+            }
+        }
+    }
 }

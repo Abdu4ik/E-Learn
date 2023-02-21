@@ -1,11 +1,9 @@
 package com.tafakkoor.englishlearningplatform.servlets.teacher;
 
 import com.tafakkoor.englishlearningplatform.dao.StoryDAO;
-import com.tafakkoor.englishlearningplatform.dao.UserDAO;
 import com.tafakkoor.englishlearningplatform.dao.VocabularyDAO;
 import com.tafakkoor.englishlearningplatform.domains.Document;
 import com.tafakkoor.englishlearningplatform.domains.Story;
-import com.tafakkoor.englishlearningplatform.domains.Users;
 import com.tafakkoor.englishlearningplatform.domains.Vocabulary;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
 import jakarta.servlet.ServletException;

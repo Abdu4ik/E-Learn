@@ -40,11 +40,11 @@
                 <div class="form-wrapper align-items-center">
                     <div class="form sign-up">
 
-
+                        <div style="color: red">
                             <c:if test="${problem != null}">
                                 <snap class="small text-left"><c:out value="${problem}"></c:out></snap>
                             </c:if>
-
+                        </div>
 
                         <div class="input-group">
                             <i class='bx bxs-user'></i>

@@ -19,7 +19,8 @@ public class ChangePasswordFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String userId = req.getParameter("user_id");
+        String userId = req.getSession().getAttribute("user_id").toString();
+//        String userId = req.getParameter("user_id");
 
         String oldPassword = req.getParameter("old_password");
         String newPassword = req.getParameter("new_password");
@@ -54,9 +55,6 @@ public class ChangePasswordFilter implements Filter {
             if (errors.isEmpty()) {
                 chain.doFilter(request, response);
             } else {
-                for (Map.Entry<String, String> entry : errors.entrySet()) {
-                    System.out.println(entry.getKey() + " : " + entry.getValue());
-                }
                 UserValidator.setErrorAttributes(req, errors);
                 req.getRequestDispatcher("views/authorization/change-password.jsp").forward(req, res);
             }

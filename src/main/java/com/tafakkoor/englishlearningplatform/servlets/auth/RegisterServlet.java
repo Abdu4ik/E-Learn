@@ -31,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
         if (errors.isEmpty()) {
             UserService.register(request, response);
         } else {
-            UserValidator.setErrorAttributes(request, errors);
+            errors.forEach(request::setAttribute);
             request.getRequestDispatcher("views/authorization/register.jsp").forward(request, response);
         }
 

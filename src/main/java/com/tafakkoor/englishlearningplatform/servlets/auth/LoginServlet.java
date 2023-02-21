@@ -25,23 +25,26 @@ public class LoginServlet extends HttpServlet {
 
         String url = request.getQueryString();
 
-
         String username = request.getParameter("in_username");
         String password = request.getParameter("in_password");
 
         Users user = UserDAO.getInstance().findByUsername(username);
 
+
         if (user == null) {
             request.setAttribute("error", "Username or password is incorrect");
             request.getRequestDispatcher("/views/authorization/login.jsp").forward(request, response);
         } else {
-            if (UserService.isCorrectPassword(password, user.getPassword())) {
+            if (user.isDeleted()) {
+                request.setAttribute("error", "Your account has been blocked!");
+                request.getRequestDispatcher("/views/authorization/login.jsp").forward(request, response);
+            }else if (UserService.isCorrectPassword(password, user.getPassword())) {
 
                 String userId = String.valueOf(user.getId());
                 String encrypt = AES.encrypt(userId);
                 Cookie cookie = UserService.createCookie(encrypt);
                 response.addCookie(cookie);
-                response.sendRedirect((url != null)? url.substring(5) : Utils.redirectByRole(user));
+                response.sendRedirect((url != null) ? url.substring(5) : Utils.redirectByRole(user));
             } else {
                 request.setAttribute("error", "Username or password is incorrect");
                 request.getRequestDispatcher("/views/authorization/login.jsp").forward(request, response);

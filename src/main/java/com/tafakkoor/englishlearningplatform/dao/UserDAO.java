@@ -24,9 +24,7 @@ public class UserDAO extends BaseDAO<Users, Long> {
         return query.getResultList();
     }
 
-    public boolean changeRole(String id, String path) {
-
-
+    public boolean changeRole(Integer id, String path) {
         Roles role = null;
         switch (path) {
             case "admin" -> role = Roles.ADMIN;

@@ -11,7 +11,6 @@ import java.io.IOException;
 public class UserHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().setAttribute("hasCookie", Utils.checkCookie(request));
         request.getRequestDispatcher("/views/user/index.jsp").forward(request, response);
     }
 
