@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GrammarDAO extends BaseDAO<Grammar, Integer> {
-    private static final ThreadLocal<GrammarDAO> grammarDAOThreadLocal = ThreadLocal.withInitial(GrammarDAO::new);
 
     public List<Grammar> getPage(int page, int size) {
         begin();
@@ -21,9 +19,6 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         return query.getResultList();
     }
 
-    public static GrammarDAO getInstance() {
-        return grammarDAOThreadLocal.get();
-    }
 
 
     public List<Grammar> findAllStories() {

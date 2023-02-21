@@ -31,7 +31,7 @@ public class TeacherService {
     }
 
     public List<Grammar> getAllGrammars() {
-        return GrammarDAO.getInstance().findAllGrammars();
+        return new GrammarDAO().findAllGrammars();
     }
 
     public void saveQuestion(Questions questions) {
@@ -48,7 +48,7 @@ public class TeacherService {
     public Grammar getGrammarById(int grammarId) {
 
 
-        return GrammarDAO.getInstance().findById(grammarId);
+        return new GrammarDAO().findById(grammarId);
     }
 
     public void deleteWord(int id) {
@@ -62,8 +62,25 @@ public class TeacherService {
         StoryDAO storyDAO = new StoryDAO();
         storyDAO.update(story);
     }
+    public void updateAsDelete(Grammar grammar) {
+        GrammarDAO grammarDAO = new GrammarDAO();
+        grammarDAO.update(grammar);
+    }
     public void updateStory(Story story) {
         StoryDAO storyDAO = new StoryDAO();
         storyDAO.update(story);
+    }
+
+    public List<Questions> getGrammarQuestions(Grammar grammar) {
+        QuestionDAO questionDAO = new QuestionDAO();
+        Questions questions = new Questions();
+
+        return questionDAO.findAllByGrammarId(grammar.getId());
+
+    }
+
+    public void updateGrammar(Grammar grammar) {
+        GrammarDAO grammarDAO = new GrammarDAO();
+        grammarDAO.update(grammar);
     }
 }

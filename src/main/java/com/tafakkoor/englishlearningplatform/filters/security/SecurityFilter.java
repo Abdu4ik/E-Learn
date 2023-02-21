@@ -39,7 +39,7 @@ public class SecurityFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             Cookie[] cookies = req.getCookies();
-            if(Objects.isNull(cookies)) {
+            if (Objects.isNull(cookies)) {
                 res.sendRedirect(req.getContextPath() + "/login");
             } else {
                 Arrays.stream(cookies)

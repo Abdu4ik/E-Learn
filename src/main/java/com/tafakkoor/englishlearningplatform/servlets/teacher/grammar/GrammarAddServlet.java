@@ -67,7 +67,7 @@ public class GrammarAddServlet extends HttpServlet {
                 .document(document)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
-        GrammarDAO.getInstance().save(grammar);
+        new GrammarDAO().save(grammar);
 
         String option1 = request.getParameter("option1");
         String option2 = request.getParameter("option2");
@@ -87,7 +87,6 @@ public class GrammarAddServlet extends HttpServlet {
 
 
         response.sendRedirect("/teacher/grammar/list");
-        // TODO: 2/19/2023 questionni ham saqlash kerak
     }
 
     private void saveQuestionOptions(Questions questions, String correctOption, String... options) {

@@ -22,6 +22,13 @@ public class QuestionDAO extends BaseDAO<Questions, Integer> {
         return questionsList;
     }
 
+    public List<Questions> findAllByStoryId( Integer id ) {
+        begin();
+        List<Questions> questionsList = em.createNativeQuery("select * from questions where story_id = :id", Questions.class).setParameter("id", id).getResultList();
+        commit();
+        return questionsList;
+    }
+
 
     public static QuestionDAO getInstance() {
         return questionDAOThreadLocal.get();

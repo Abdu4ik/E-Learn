@@ -33,10 +33,10 @@ public class AddQuestionServlet extends HttpServlet {
         String grammarId = request.getPathInfo().substring(1);
         try {
             Grammar grammar=TeacherService.getInstance().getGrammarById(Integer.parseInt(grammarId));
-            String option1 = request.getParameter("option1");
-            String option2 = request.getParameter("option2");
-            String option3 = request.getParameter("option3");
-            String option4 = request.getParameter("option4");
+            String option1 = request.getParameter("answer1");
+            String option2 = request.getParameter("answer2");
+            String option3 = request.getParameter("answer3");
+            String option4 = request.getParameter("answer4");
             String correctAnswer = request.getParameter("correctAnswer");
             String question = request.getParameter("question");
             Questions questions = Questions.builder()
@@ -46,7 +46,7 @@ public class AddQuestionServlet extends HttpServlet {
             TeacherService.getInstance().saveQuestion(questions);
 
             saveQuestionOptions(questions, correctAnswer, option1, option2, option3, option4);
-            response.sendRedirect("/teacher/grammar/"+grammar.getId()+"/add-question");
+            response.sendRedirect("/teacher/grammar/update/"+grammarId);
         }catch (Exception e){
             response.sendRedirect("/teacher/grammar/list");
         }
