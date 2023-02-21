@@ -6,12 +6,14 @@ const a_text = document.getElementById('a_text')
 const b_text = document.getElementById('b_text')
 const c_text = document.getElementById('c_text')
 const d_text = document.getElementById('d_text')
+const userId = document.getElementById('user_id').value
 const submitBtn = document.getElementById('submit')
 const body = document.getElementById('body')
 const current_quiz = document.getElementById('current_quiz')
-let currentQuiz = document.getElementById('current_quiz').value
+let currentQuiz = 0
 let score = 0
 let quizData = (function getQuestions() {
+    console.log(grammar_id)
     fetch('http://localhost:8080/questions/get/' + grammar_id)
         .then(response => response.json())
         .then(json => {
@@ -38,7 +40,6 @@ function getSelected() {
 
 function loadQuiz() {
     deselectAnswers()
-    document.getElementById('questionId').value = quizData[currentQuiz].questionId
     questionEl.innerText = quizData[currentQuiz].question
     a_text.innerText = quizData[currentQuiz].a
     b_text.innerText = quizData[currentQuiz].b
@@ -49,25 +50,32 @@ function loadQuiz() {
 
 submitBtn.addEventListener('click', () => {
     let answer = getSelected()
+    let questionId = quizData[currentQuiz].questionId
+    let isCorrect = quizData[currentQuiz].correct===answer
+    let isLastQuestion = currentQuiz === quizData.length - 1
+    fetch('http://localhost:8080/grammar/test', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({   userId ,questionId ,isCorrect , isLastQuestion})
+    }).then(response => console.log('Success:'))
     if (answer) {
+
+
         if (answer === quizData[currentQuiz].correct) {
             score++
         }
-        document.getElementById('choice').value = answer
 
         currentQuiz++
-        current_quiz.value = currentQuiz
+        console.log(currentQuiz)
         if (currentQuiz < quizData.length) {
             loadQuiz()
+
         } else {
-            // fetch('http://localhost:8080/grammar/test', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({ userAnswers})
-            // }).then(response => console.log('Success:'))
+
 
             quiz.innerHTML = `
           

@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.tafakkoor.englishlearningplatform.domains.Vocabulary" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 2/15/2023
@@ -108,43 +109,49 @@
         </select>
 
     </div>
+
     <div class="col-md-3 offset-1">
         <label for="file" class="form-label">Upload the PDF file of the story</label>
         <input value="${story.getDocument().getFilePath()}" type="file" class="form-control" id="file" name="file"
-               aria-label="file example" required>
+               aria-label="file example">
         <div class="invalid-feedback">Example invalid form file feedback</div>
     </div>
 
-    <h2 style="text-align: center">Added words</h2>
-    <div>
-        <c:forEach items="${words}" var="word">
-            <div class="wrapper">
-                <div class="b">
-                    <input type="text" name="en_options[]" class="en_options" size="50" placeholder="english word"
-                           value="${word.getEnWord()}">
-                </div>
-                <div class="b">
-                    <input type="text" name="uz_options[]" class="uz_options" size="50" placeholder="uzbek word"
-                           value="${word.getUzWord()}">
-                </div>
-            </div>
-        </c:forEach>
-    </div>
+
+    <%
+        List<Vocabulary> list = (List<Vocabulary>) session.getAttribute("vocabularies");
+        if (list != null && list.size() > 0) {%>
+    <h2 style="text-align: center">Words added</h2>
+    <table class="table table-striped offset-1">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">English</th>
+            <th scope="col">Uzbek</th>
+        </tr>
+        </thead>
+        <%for (Vocabulary vocabulary : list) {%>
+        <tr>
+            <th>${i=i+1}</th>
+            <td><%=vocabulary.getWord()%>
+            </td>
+            <td><%=vocabulary.getMeaning()%>
+            </td>
+            <td>
+                <a class="btn btn-danger" href="/teacher/story/word/delete/<%=vocabulary.getId()%>">Delete</a>
+            </td>
+        </tr>
+        <%
+            } %>
+    </table>
+    <%
+    } else {
+    %>
+    <h2 style="text-align: center">No words added yet</h2>
+    <%}%>
 
 
     <div class="wrapper">
-        <c:if test="${vocabularyList!=null && vocabularyList.size()>0}">
-            <c:forEach items="${vocabularyList}" var="vocabulary">
-                <div class="b">
-                    <input type="text" name="en_options[]" class="en_options" size="50" placeholder="english word"
-                           value="${vocabulary.getWord()}">
-                </div>
-                <div class="b">
-                    <input type="text" name="uz_options[]" class="uz_options" size="50" placeholder="uzbek word"
-                           value="${vocabulary.getMeaning()}">
-                </div>
-            </c:forEach>
-        </c:if>
 
         <h2 style="text-align: center">Add words</h2>
         <div id="en_options" class="b">
@@ -161,6 +168,8 @@
 
 
     <div class="col-12 offset-1">
+        <a class="btn btn-secondary" type="submit" href="/teacher/story/list"> Back </a>
+        <a class="btn btn-danger" type="submit" href="/teacher/story/delete/${story.getId()}">Delete story</a>
         <button class="btn btn-primary" type="submit">Update story</button>
     </div>
 </form>

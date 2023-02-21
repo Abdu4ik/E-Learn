@@ -1,5 +1,6 @@
 package com.tafakkoor.englishlearningplatform.domains;
 
+import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class User_Story {
+public class User_Story implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
