@@ -39,4 +39,11 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         commit();
         return query.getResultList();
     }
+    public Grammar getStoryWithOption( String userLevel) {
+        begin();
+        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel", Grammar.class)
+                .setParameter("userLevel", userLevel).getSingleResult();
+        commit();
+        return grammar;
+    }
 }

@@ -58,5 +58,20 @@ public class UserDAO extends BaseDAO<Users, Long> {
             return null;
         }
     }
+    public void updateLastTestID(Integer userId, int i) {
+        begin();
+        Users user = findById(Long.valueOf(userId));
+        user.setLastTestID(i);
+        update(user);
+        commit();
+    }
+
+    public void updateScore(Integer userId, int i) {
+        begin();
+        Users users = findById(Long.valueOf(userId));
+        users.setScore(i);
+        update(users);
+        commit();
+    }
 
 }
