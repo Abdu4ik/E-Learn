@@ -31,5 +31,5 @@ public class UsersTestsHistory implements BaseEntity {
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Builder.Default
-    private LocalDateTime created_at;
+    private LocalDateTime created_at = LocalDateTime.now();
 }
