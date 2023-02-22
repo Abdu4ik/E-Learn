@@ -84,10 +84,10 @@
 
     <div class="wrapper1 offset-1">
         <label for="answer1">Insert answer here</label>
-        <input type="text" class="form-control" id="answer1" name="answer1" placeholder="option 1">
-        <input type="text" class="form-control" id="answer2" name="answer2" placeholder="option 2">
-        <input type="text" class="form-control" id="answer3" name="answer3" placeholder="option 3">
-        <input type="text" class="form-control" id="answer4" name="answer4" placeholder="option 4">
+        <input type="text" class="form-control" id="answer1" name="option1" placeholder="option 1">
+        <input type="text" class="form-control" id="answer2" name="option2" placeholder="option 2">
+        <input type="text" class="form-control" id="answer3" name="option3" placeholder="option 3">
+        <input type="text" class="form-control" id="answer4" name="option4" placeholder="option 4">
     </div>
     <div class="wrapper1 offset-1">
         <label for="correctAnswer" class="form-label">Choose correct answer</label>

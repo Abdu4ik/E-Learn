@@ -9,17 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class StoryAddValidator {
-    private static StoryAddValidator instance;
+    private static ThreadLocal<StoryAddValidator> instance=ThreadLocal.withInitial(StoryAddValidator::new);
 
     public static StoryAddValidator getInstance() {
-        if (Objects.isNull(instance)) {
-            synchronized (StoryAddValidator.class) {
-                if (Objects.isNull(instance)) {
-                    instance = new StoryAddValidator();
-                }
-            }
-        }
-        return instance;
+        return instance.get();
     }
 
     public static final List<Levels> LEVELS = List.of(Levels.values());

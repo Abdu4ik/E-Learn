@@ -2,6 +2,9 @@ package com.tafakkoor.englishlearningplatform.service;
 
 import com.tafakkoor.englishlearningplatform.dao.*;
 import com.tafakkoor.englishlearningplatform.domains.*;
+import com.tafakkoor.englishlearningplatform.utils.validator.GrammarValidator;
+import com.tafakkoor.englishlearningplatform.utils.validator.QuestionValidator;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -116,5 +119,15 @@ public class TeacherService {
         Questions questions = questionDAO.findById(id);
         deleteVariantsByQuestionId(questions.getId());
         questionDAO.delete(questions);
+    }
+
+    public void validateGrammar(HttpServletRequest req) throws Exception {
+        GrammarValidator validator = new GrammarValidator();
+        validator.validate(req);
+    }
+
+    public void validateQuestion(HttpServletRequest req) throws Exception {
+        QuestionValidator validator = new QuestionValidator();
+        validator.validate(req);
     }
 }
