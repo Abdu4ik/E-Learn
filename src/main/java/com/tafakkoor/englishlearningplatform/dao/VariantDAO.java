@@ -20,4 +20,10 @@ public class VariantDAO extends BaseDAO<Variants, Integer> {
     public static VariantDAO getInstance() {
         return variantDAOThreadLocal.get();
     }
+
+    public void deleteVariantsByQuestionId(Integer id) {
+        begin();
+        em.createNativeQuery("delete from variants where questions_id = :id").setParameter("id", id).executeUpdate();
+        commit();
+    }
 }

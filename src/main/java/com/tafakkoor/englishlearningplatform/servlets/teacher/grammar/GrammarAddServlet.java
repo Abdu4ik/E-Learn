@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "GrammarAddServlet", value = "/teacher/grammar/add")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\resources\\files")
+@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
 public class GrammarAddServlet extends HttpServlet {
     public static final String projectPath = System.getProperty("user.dir");
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/apps/library/upload");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
 
     @Override
     public void init() throws ServletException {
@@ -56,7 +56,7 @@ public class GrammarAddServlet extends HttpServlet {
         Document document = Document.builder()
                 .generatedFileName(generatedName)
                 .originalFileName(originalName)
-                .filePath(rootPath.resolve(generatedName).toString())
+                .filePath("/uploads/files/stories/" + generatedName)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
         file.write(generatedName);

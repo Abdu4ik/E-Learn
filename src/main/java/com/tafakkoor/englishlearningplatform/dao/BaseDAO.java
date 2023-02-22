@@ -44,7 +44,9 @@ public abstract class BaseDAO<T extends BaseEntity, ID extends Serializable> {
     }
 
     public boolean delete( T t ) {
+        begin();
         em.remove(t);
+        commit();
         return true;
     }
 

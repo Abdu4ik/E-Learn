@@ -83,4 +83,38 @@ public class TeacherService {
         GrammarDAO grammarDAO = new GrammarDAO();
         grammarDAO.update(grammar);
     }
+
+    public Questions getQuestionById(int questionId) {
+        QuestionDAO questionDAO = new QuestionDAO();
+        return questionDAO.findById(questionId);
+    }
+
+    public List<Variants> getVariantsByQuestionId(int id) {
+
+        Questions questions=new Questions();
+
+        return new VariantDAO().findAllByQuestionId(id);
+    }
+
+    public void updateQuestion(Questions questions) {
+        QuestionDAO questionDAO = new QuestionDAO();
+        questionDAO.update(questions);
+    }
+
+    public void updateVariant(Variants variants) {
+        VariantDAO variantDAO = new VariantDAO();
+        variantDAO.update(variants);
+    }
+
+    public void deleteVariantsByQuestionId(Integer id) {
+        VariantDAO variantDAO = new VariantDAO();
+        variantDAO.deleteVariantsByQuestionId(id);
+    }
+
+    public void deleteQuestion(int id) {
+        QuestionDAO questionDAO = new QuestionDAO();
+        Questions questions = questionDAO.findById(id);
+        deleteVariantsByQuestionId(questions.getId());
+        questionDAO.delete(questions);
+    }
 }

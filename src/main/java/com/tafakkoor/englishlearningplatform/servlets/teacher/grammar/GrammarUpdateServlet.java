@@ -17,9 +17,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 @WebServlet(name = "GrammarUpdateServlet", value = "/teacher/grammar/update/*")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\resources\\files")
+@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
 public class GrammarUpdateServlet extends HttpServlet {
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/apps/library/upload");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,7 +63,7 @@ public class GrammarUpdateServlet extends HttpServlet {
             Document.builder()
                     .generatedFileName(generatedName)
                     .originalFileName(originalName)
-                    .filePath(rootPath.resolve(generatedName).toString())
+                    .filePath("/uploads/files/stories/" + generatedName)
                     .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                     .build();
             file.write(generatedName);
