@@ -13,7 +13,9 @@ import java.util.List;
 public class ReadingPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Story> stories= UserService.getInstance().getStoryListByUserLevel(request.getSession().getAttribute("user_id").toString());
+        String userId = request.getSession().getAttribute("user_id").toString();
+        System.out.println(userId);
+        List<Story> stories= UserService.getInstance().getStoryListByUserLevel(userId);
         request.setAttribute("stories", stories);
 
         request.getRequestDispatcher("/views/user/reading-page.jsp").forward(request, response);
