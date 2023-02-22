@@ -1,11 +1,11 @@
 package com.tafakkoor.englishlearningplatform.dao;
 
 import com.tafakkoor.englishlearningplatform.domains.Story;
+import com.tafakkoor.englishlearningplatform.domains.Users;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 public class StoryDAO extends BaseDAO<Story, Integer> {
 
@@ -23,12 +23,12 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
         return true;
     }
 
-    public boolean delete( Integer id ) {
-        begin();
-        em.createNativeQuery("update story set deleted = true where id = :id;").setParameter("id", id);
-        commit();
-        return true;
-    }
+//    public boolean delete( Integer id ) {
+//        begin();
+//        em.createNativeQuery("update story set deleted = true where id = :id;").setParameter("id", id);
+//        commit();
+//        return true;
+//    }
 
 
 
@@ -61,7 +61,7 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
     public Story getStoryWithOption( String userLevel, Long userId ) {
 
         begin();
-        Query query = em.createNativeQuery("select *from story where level = :level and id not in (select story_id from user_story where user_id = :userId and is_saved = true);", Story.class)
+        Query query = em.createNativeQuery("select *from story where level = :level and id not in (select story_id from user_story where user_id = :userId and is_saved = true) limit 1;", Story.class)
                 .setParameter("level", userLevel)
                 .setParameter("userId", userId);
         if (query.getResultList().isEmpty()) {
@@ -88,4 +88,31 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
         return new StoryDAO();
     }
 
+    public List<Story> getStoryListByUserLevel(int id) {
+        Users user = new UserDAO().findById((long) id);
+        if (user == null) {
+            return new ArrayList<>();
+        }
+
+        begin();
+
+        List<Story> query = em.createNativeQuery(
+                "select * from story s where s.level = :level and s.id not in (select story_id from user_story where user_id = :userId and is_saved = true);", Story.class)
+                .setParameter("level", user.getLevel().name())
+                .setParameter("userId", id).getResultList();
+
+
+        commit();
+        return query;
+    }
+
+//    public static void main(String[] args) {
+//
+//        StoryDAO storyDAO = new StoryDAO();
+//        Story storyWithOption =storyDAO.getStoryWithOption("BEGINNER", 1L);
+//        System.out.println("storyWithOption = " + storyWithOption);
+//        for (Story story : storyDAO.getStoryListByUserLevel(1)) {
+//            System.out.println("story = " + story);
+//        }
+//    }
 }

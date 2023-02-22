@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "VocabularyGetServlet", value = "/vocabulary/get/test/*")
@@ -34,8 +33,7 @@ public class VocabularyGetServlet extends HttpServlet {
             Story story = storyDAO.getStoryById(storyId);
             List<Vocabulary> vocabulariesByStoryId = vocabularyDAO.getVocabulariesByStoryId(story);
             List<VocabHelperTest> quizHelperList = new ArrayList<>();
-            List<VocabHelperTest> quiz = UserService.getQuiz(vocabulariesByStoryId, storyId, quizHelperList);
-
+            List<VocabHelperTest> quiz = UserService.getInstance().getQuiz(vocabulariesByStoryId, storyId, quizHelperList);
             System.out.println("quiz="+quiz);
             Gson gson = new Gson();
             String jsonData = gson.toJson(quizHelperList);

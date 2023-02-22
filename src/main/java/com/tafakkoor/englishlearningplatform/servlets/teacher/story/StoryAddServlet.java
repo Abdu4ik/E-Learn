@@ -7,6 +7,7 @@ import com.tafakkoor.englishlearningplatform.domains.Story;
 import com.tafakkoor.englishlearningplatform.domains.Users;
 import com.tafakkoor.englishlearningplatform.domains.Vocabulary;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
+import com.tafakkoor.englishlearningplatform.service.TeacherService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -80,8 +81,8 @@ public class StoryAddServlet extends HttpServlet {
                 .build();
 
 
+        TeacherService.getInstance().saveStory(story);
 
-        new com.tafakkoor.englishlearningplatform.dao.StoryDAO().save(story);
 //        CompletableFuture.runAsync(() -> {
             VocabularyDAO vocabularyDAO = new VocabularyDAO();
             try {

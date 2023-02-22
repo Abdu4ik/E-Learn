@@ -130,4 +130,9 @@ public class TeacherService {
         QuestionValidator validator = new QuestionValidator();
         validator.validate(req);
     }
+
+    public void saveStory(Story story) {
+        StoryDAO storyDAO = new StoryDAO();
+        storyDAO.save(story);
+    }
 }

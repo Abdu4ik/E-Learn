@@ -54,7 +54,7 @@
 
                     <li class="menu-has-children"><a href="#">Practises</a>
                         <ul>
-                            <li><a href="/reading">Reading</a></li>
+                            <li><a href="/reading-page">Reading</a></li>
                             <li><a href="/grammar">Grammar</a></li>
                             <li><a href="/vocabulary">Vocabulary</a></li>
                         </ul>

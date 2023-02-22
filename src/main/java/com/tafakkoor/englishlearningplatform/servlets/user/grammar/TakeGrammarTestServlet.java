@@ -19,13 +19,14 @@ import java.io.IOException;
 @WebServlet(name = "TakeGrammarTestServlet", value = "/grammar/test")
 public class TakeGrammarTestServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {HttpSession session = request.getSession();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
         String userId = request.getSession().getAttribute("user_id").toString();
         request.setAttribute("userId", userId);
-         Integer grammarId=Integer.parseInt(String.valueOf(request.getAttribute("grammarId")));
+        Integer grammarId = Integer.parseInt(String.valueOf(request.getAttribute("grammarId")));
         System.out.println(grammarId);
-          request.setAttribute("grammarId", grammarId);
+        request.setAttribute("grammarId", grammarId);
 
         request.getRequestDispatcher("/views/user/take_grammar_test.jsp").forward(request, response);
     }

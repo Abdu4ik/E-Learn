@@ -13,7 +13,6 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -91,7 +90,7 @@ public class StoryUpdateServlet extends HttpServlet {
         story.setDocument(Objects.requireNonNullElse(document, story.getDocument()));
 
         TeacherService.getInstance().updateStory(story);
-        new StoryDAO().update(story);
+//        new StoryDAO().update(story);
 //        CompletableFuture.runAsync(() -> {
         VocabularyDAO vocabularyDAO = new VocabularyDAO();
         try {

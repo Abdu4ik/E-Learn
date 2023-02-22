@@ -108,7 +108,7 @@
     </div>
 
     <div class="col-12 offset-1">
-        <a class="btn btn-secondary" href="/teacher/grammar/update/${question.getId()}" type="submit"> Back </a>
+        <a class="btn btn-secondary" href="/teacher/grammar/list" type="submit"> Back </a>
         <button class="btn btn-primary" type="submit">Update question</button>
     </div>
 </form>

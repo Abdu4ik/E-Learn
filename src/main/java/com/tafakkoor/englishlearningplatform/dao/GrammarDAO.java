@@ -38,7 +38,7 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
     }
     public Grammar getStoryWithOption( String userLevel) {
         begin();
-        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel", Grammar.class)
+        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel order by random() limit 1", Grammar.class)
                 .setParameter("userLevel", userLevel).getSingleResult();
         commit();
         return grammar;

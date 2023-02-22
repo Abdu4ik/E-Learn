@@ -36,7 +36,7 @@
         <%} else {%>
         <h2 style="text-align: center; color: #0f5132; background-color: #9ec5fe; align-self: center">Stories</h2>
         <div class="col-12 offset-1">
-            <a href="/story/add" class="btn btn-primary" type="submit"> Add </a>
+            <a href="/teacher/story/add" class="btn btn-primary" type="submit"> Add </a>
         </div>
         <thead>
         <tr>

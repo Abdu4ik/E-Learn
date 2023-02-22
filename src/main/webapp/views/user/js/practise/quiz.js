@@ -21,7 +21,7 @@ let quizData = (function getQuestions() {
             loadQuiz()
         })
 });
-
+body.onload=quizData()
 function deselectAnswers() {
     answerEls.forEach(answerEl => answerEl.checked = false)
 }

@@ -14,9 +14,9 @@ let currentQuiz = 0
 let score = 0
 let vocabQuizData = (function getQuestions() {
     fetch('http://localhost:8080/vocabulary/get/test/' + story_id)
-
         .then(response => response.json())
         .then(json => {
+            console.log(json)
             vocabQuizData = json
             loadQuiz()
         })
@@ -51,22 +51,13 @@ function loadQuiz() {
 
 submitBtn.addEventListener('click', () => {
     let answer = getSelected()
-    let questionId = vocabQuizData[currentQuiz].story_id
-    let isCorrect = vocabQuizData[currentQuiz].correct===answer
-    let isLastQuestion = currentQuiz === vocabQuizData.length - 1
-    fetch('http://localhost:8080/vocabulary/test/', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
 
-        body: JSON.stringify({userId, story_id ,questionId ,isCorrect , isLastQuestion})
-    }).then(response => console.log('Success:'))
     if (answer) {
 
 
         if (answer === vocabQuizData[currentQuiz].correct) {
+            console.log(vocabQuizData[currentQuiz].correct)
+            console.log(answer)
             score++
         }
 

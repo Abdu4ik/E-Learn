@@ -46,7 +46,6 @@ public class UpdateQuestionServlet extends HttpServlet {
         try {
             TeacherService teacherService = TeacherService.getInstance();
 
-//            Grammar grammar=TeacherService.getInstance().getGrammarById(Integer.parseInt(questionId));
             String option1 = request.getParameter("answer1");
             String option2 = request.getParameter("answer2");
             String option3 = request.getParameter("answer3");
@@ -62,9 +61,9 @@ public class UpdateQuestionServlet extends HttpServlet {
             TeacherService.getInstance().updateQuestion(question);
             deleteQuestionOptions(question);
             updateQuestionOptions(question, correctAnswer, option1, option2, option3, option4);
-            response.sendRedirect("/teacher/grammar/update/"+questionId);
+            response.sendRedirect("/teacher/grammar/update-question/"+questionId)   ;
         }catch (Exception e){
-            response.sendRedirect("/teacher/grammar/update/"+questionId);
+            response.sendRedirect("/teacher/grammar/list");
         }
     }
     private void deleteQuestionOptions(Questions questions) {

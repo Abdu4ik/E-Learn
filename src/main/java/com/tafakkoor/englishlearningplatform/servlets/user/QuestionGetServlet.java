@@ -24,21 +24,23 @@ public class QuestionGetServlet extends HttpServlet {
         VariantDAO variantDAO = VariantDAO.getInstance();
         String pathInfo = request.getPathInfo();
         int grammarId = Integer.parseInt(pathInfo.substring(1));
+        System.out.println(grammarId);
         try {
             int id = Integer.parseInt(String.valueOf(grammarId));
             List<QuizHelper> quizHelperList = new ArrayList<>();
             List<Questions> questionsList = questionDAO.findAllByGrammarId(id);
-            for (Questions questions : questionsList) {
-                List<Variants> variants = variantDAO.findAllByQuestionId(questions.getId());
+            for (int i = 0; i <questionsList.size() ; i++) {
+                List<Variants> variants = variantDAO.findAllByQuestionId(questionsList.get(i).getId());
                 QuizHelper quiz = QuizHelper.builder().
-                        question(questions.getTitle()).
-                        questionId(questions.getId()).
+                        question(questionsList.get(i).getTitle()).
+                        questionId(questionsList.get(i).getId()).
                         a(variants.get(0).getVariant()).
                         b(variants.get(1).getVariant()).
                         c(variants.get(2).getVariant()).
                         d(variants.get(3).getVariant()).
                         correct(getCorrectValue(variants)).build();
                 quizHelperList.add(quiz);
+                System.out.println(quiz);
             }
             Gson gson = new Gson();
             String jsonData = gson.toJson(quizHelperList);
@@ -51,18 +53,19 @@ public class QuestionGetServlet extends HttpServlet {
     }
 
     private String getCorrectValue(List<Variants> variants) {
-        var a = variants.get(0).getVariant();
-        var b = (variants.get(1).getVariant());
-        var c = (variants.get(2).getVariant());
-        var d = (variants.get(3).getVariant());
-        var correct = variants.stream().filter(Variants::isCorrect).findFirst().get().getVariant();
-        if (correct.equals(a)) {
+        if (variants.size() != 4) {
+            return "";
+        }
+        if (variants.get(0).isCorrect()) {
             return "a";
-        } else if (correct.equals(b)) {
+        }
+        if (variants.get(1).isCorrect()) {
             return "b";
-        } else if (correct.equals(c)) {
+        }
+        if (variants.get(2).isCorrect()) {
             return "c";
-        } else if (correct.equals(d)) {
+        }
+        if (variants.get(3).isCorrect()) {
             return "d";
         }
         return "";

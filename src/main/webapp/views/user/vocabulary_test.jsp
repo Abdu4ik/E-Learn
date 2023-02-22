@@ -102,7 +102,7 @@
         background-color: #44b927;
     }
 </style>
-<body id="body" >
+<body id="body" onload="quizData()" >
 
 <div class="quiz-container" id="quiz">
     <div class="quiz-header">
