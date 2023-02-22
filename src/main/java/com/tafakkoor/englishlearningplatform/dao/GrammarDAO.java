@@ -43,4 +43,8 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         commit();
         return grammar;
     }
+
+    public static GrammarDAO getInstance() {
+        return new GrammarDAO();
+    }
 }
