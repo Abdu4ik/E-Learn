@@ -75,15 +75,25 @@ public class UserService {
     }
 
     public List<Story> getStoryListByUserLevel(String userId) {
-        int id;
-        try {
-            id = Integer.parseInt(userId);
-        }catch (Exception e){
-            return new ArrayList<>();
-        }
-        StoryDAO storyDAO = new StoryDAO();
-        return storyDAO.getStoryListByUserLevel(id);
 
+//        int id;
+//        try {
+//            id = Integer.parseInt(userId);
+//        }catch (Exception e){
+//            return new ArrayList<>();
+//        }
+//        StoryDAO storyDAO = new StoryDAO();
+//        return storyDAO.getStoryListByUserLevel(id);
+
+        List<Story> stories = new ArrayList<>();
+        try{
+            long id = Long.parseLong(userId);
+            StoryDAO storyDAO = new StoryDAO();
+          stories = storyDAO.getStoryListByUserLevel(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return stories;
     }
 
     public List<VocabHelperTest> getQuiz(List<Vocabulary> vocabulariesByStoryId, int storyId, List<VocabHelperTest> quizHelperList) {
