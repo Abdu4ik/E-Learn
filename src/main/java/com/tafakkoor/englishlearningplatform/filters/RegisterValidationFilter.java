@@ -38,6 +38,10 @@ public class RegisterValidationFilter implements Filter {
                 errors.put("pass_conf_err", "Confirm password can not be null");
             } else if (!password.equals(confirmPassword)) {
                 errors.put("pass_conf_err", "Passwords don't match!");
+            }else if (password.contains(" ")) {
+                errors.put("password", "White space is not allowed!");
+            } else if (!UserValidator.validatePassword(password)) {
+                errors.put("password", "Choose a stronger password");
             }
 
             if (email == null || email.isBlank() || email.isEmpty()) {
@@ -49,7 +53,7 @@ public class RegisterValidationFilter implements Filter {
             if (errors.isEmpty()) {
                 chain.doFilter(request, response);
             } else {
-                UserValidator.setErrorAttributes(req, errors);
+                errors.forEach(req::setAttribute);
                 req.getRequestDispatcher("views/authorization/register.jsp").forward(req, res);
             }
         } else {

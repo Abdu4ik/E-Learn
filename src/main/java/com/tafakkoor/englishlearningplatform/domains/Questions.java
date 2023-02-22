@@ -26,9 +26,7 @@ public class Questions implements BaseEntity {
     @JoinColumn( nullable = false )
     @ManyToOne( cascade = CascadeType.MERGE, fetch = FetchType.LAZY )
     private Grammar grammar;
-//    @JoinColumn( nullable = false )
-//    @ManyToOne( cascade = CascadeType.ALL )
-//    private Grammar grammar;
+
 
 
     @Override

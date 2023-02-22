@@ -1,5 +1,6 @@
 package com.tafakkoor.englishlearningplatform.domains;
 
+import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -16,7 +17,7 @@ import java.util.Objects;
 @Builder
 
 @AllArgsConstructor
-public class Document {
+public class Document implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

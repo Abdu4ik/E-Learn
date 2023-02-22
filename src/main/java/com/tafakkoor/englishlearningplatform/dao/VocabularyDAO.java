@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 public class VocabularyDAO extends BaseDAO<Vocabulary, Integer> {
-
+   private static final ThreadLocal<VocabularyDAO> vocabularyDAOThreadLocal = ThreadLocal.withInitial(VocabularyDAO::new);
 
     public List<Vocabulary> getVocabulariesByStoryId(Story storyId) {
         begin();
@@ -17,6 +17,10 @@ public class VocabularyDAO extends BaseDAO<Vocabulary, Integer> {
         query.setParameter("storyId", storyId);
         commit();
         return query.getResultList();
+    }
+
+    public static VocabularyDAO getInstance() {
+        return vocabularyDAOThreadLocal.get();
     }
 
 

@@ -59,6 +59,16 @@ public abstract class BaseDAO<T extends BaseEntity, ID extends Serializable> {
         return delete;
     }
 
+    public boolean changeDeleted(ID id, Boolean deleted) {
+        begin();
+        int i = em.createQuery("update " + persistenceClass.getSimpleName() + " t set t.deleted = :deleted where t.id = :id")
+                .setParameter("deleted", deleted)
+                .setParameter("id", id)
+                .executeUpdate();
+        commit();
+        return i > 0;
+    }
+
     public List<T> findAll() {
         begin();
         Query query = em.createQuery("from " + persistenceClass.getSimpleName());

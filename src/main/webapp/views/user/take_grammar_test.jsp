@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.Variants" %>
-<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.ReadStoryServlet.ReadStoryServlet" %>
+<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.StoryServlet" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.QuizHelper" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -103,41 +103,40 @@
     }
 </style>
 <body id="body" onload="quizData()">
-<form method="post">
-    <div class="quiz-container" id="quiz">
-        <div class="quiz-header">
-            <h2 id="question">Question Text <input type="hidden" name="questionId" id="questionId"></h2>
-            <ul>
-                <li>
-                    <input type="radio" name="answer" id="a" class="answer">
-                    <label for="a" id="a_text">Answer</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="b" class="answer">
-                    <label for="b" id="b_text">Answer</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="c" class="answer">
-                    <label for="c" id="c_text">Answer</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="d" class="answer">
-                    <label for="d" id="d_text">Answer</label>
-                </li>
-            </ul>
-        </div>
 
-        <input type="hidden" id="grammar_id" name="grammarId" value="${grammarId}">
-        <input type="hidden" id="choice" name="choice" value="">
-        <input type="hidden" id="current_quiz"  value="0">
-        <button id="submit" type="submit">Submit</button>
-
+<div class="quiz-container" id="quiz">
+    <div class="quiz-header">
+        <h2 id="question">Question Text <input type="hidden" name="questionId" id="questionId"></h2>
+        <ul>
+            <li>
+                <input type="radio" name="answer" id="a" class="answer">
+                <label for="a" id="a_text">Answer</label>
+            </li>
+            <li>
+                <input type="radio" name="answer" id="b" class="answer">
+                <label for="b" id="b_text">Answer</label>
+            </li>
+            <li>
+                <input type="radio" name="answer" id="c" class="answer">
+                <label for="c" id="c_text">Answer</label>
+            </li>
+            <li>
+                <input type="radio" name="answer" id="d" class="answer">
+                <label for="d" id="d_text">Answer</label>
+            </li>
+        </ul>
     </div>
 
+    <input type="hidden" id="grammar_id" name="grammarId" value="1">
+    <input type="hidden" id="user_id" name="user_id" value="2">
+    <button id="submit" >Submit</button>
 
-    <script>
-        <jsp:include page="js/practise/quiz.js"></jsp:include>
-    </script>
-</form>
+</div>
+
+
+<script>
+    <jsp:include page="js/practise/quiz.js"></jsp:include>
+</script>
+
 </body>
 </html>

@@ -24,9 +24,7 @@ public class UserDAO extends BaseDAO<Users, Long> {
         return query.getResultList();
     }
 
-    public boolean changeRole(String id, String path) {
-
-
+    public boolean changeRole(Integer id, String path) {
         Roles role = null;
         switch (path) {
             case "admin" -> role = Roles.ADMIN;
@@ -57,6 +55,21 @@ public class UserDAO extends BaseDAO<Users, Long> {
         } catch (NoResultException e) {
             return null;
         }
+    }
+    public void updateLastTestID(Integer userId, int i) {
+        begin();
+        Users user = findById(Long.valueOf(userId));
+        user.setLastTestID(i);
+        update(user);
+        commit();
+    }
+
+    public void updateScore(Integer userId, int i) {
+        begin();
+        Users users = findById(Long.valueOf(userId));
+        users.setScore(i);
+        update(users);
+        commit();
     }
 
 }

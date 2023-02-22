@@ -10,12 +10,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-
     <link rel="stylesheet" href="/resources/css/login.css">
     <link rel="stylesheet" href="/resources/css/main.css">
-
     <meta charset="UTF-8">
     <title> Title</title>
     <c:set var="us_err" value="${(username_error != null)? username_error : 'Username'}"/>
