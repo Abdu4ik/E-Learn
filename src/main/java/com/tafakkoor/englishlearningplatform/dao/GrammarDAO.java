@@ -32,6 +32,8 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         begin();
         TypedQuery<Grammar> query = em.createQuery("from Grammar s where s.deleted=false order by createdAt desc", Grammar.class);
         commit();
+//        System.out.println();
         return query.getResultList();
+
     }
 }
