@@ -36,7 +36,6 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-//        response.setBufferSize(1024 * 16);
         String requestURI = req.getRequestURI();
         String path = req.getRequestURI().substring(req.getContextPath().length());
         if (IS_ALLOWED_PATH.test(path)) {
