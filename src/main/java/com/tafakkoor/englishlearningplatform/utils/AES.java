@@ -53,42 +53,7 @@ public class AES {
     }
 
     public static void main(String[] args) {
-
+        System.out.println(Encrypt.checkPassword("Gulhayo2016!.", "$2a$10$DFwWhs8q4mefQXY4MUwb/eGIJhP78Ak/QTx6hue1H7HI0LLN4itWe"));
+//        System.out.println(Encrypt.hashPassword("Salom12!."));
     }
-
-
-    public static int findNumber(int[] arr) {
-        Arrays.sort(arr);
-        return arr[arr.length / 2];
-    }
-    // explain the above method called findNumber
-    // it takes an array of integers as an argument
-    // it sorts the array
-    // it returns the middle element of the array
-    // if the array has an even number of elements, it returns the first element of the middle two elements
-    // for example, if the array is [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    // the middle two elements are 5 and 6
-    // the method returns 5
-    // if the array is [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    // the middle element is 5
-    // the method returns 5
-    // if the array is [1, 2, 3, 4, 5, 6, 7, 8]
-    // the middle two elements are 4 and 5
-    // the method returns 4
-    // if the array is [1, 2, 3, 4, 5, 6, 7]
-    // the middle element is 4
-    // the method returns 4
-    // if the array is [1, 2, 3, 4, 5, 6]
-    // the middle two elements are 3 and 4
-    // the method returns 3
-    // if the array is [1, 2, 3, 4, 5]
-    // the middle element is 3
-    // the method returns 3
-    // if the array is [1, 2, 3, 4]
-    // the middle two elements are 2 and 3
-    // the method returns 2
-    // if the array is [1, 2, 3]
-    // the middle element is 2
-
-
 }

@@ -1,17 +1,38 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.tafakkoor.englishlearningplatform.domains.Variants" %>
+<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.story.StoryServlet" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.tafakkoor.englishlearningplatform.domains.QuizHelper" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: manguberdi
+  User: dilgan
   Date: 17/02/23
-  Time: 17:44
+  Time: 00:52
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- Font Awesome -->
+<link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+        rel="stylesheet"
+/>
 <html>
 <head>
-    <title>Title</title>
+    <title>Grammar Test</title>
+
 </head>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
 
     * {
         box-sizing: border-box;
@@ -20,7 +41,6 @@
     body {
         background-color: #b8c6db;
         background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7f7 100%);
-        font-family: 'Poppins', sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -31,10 +51,10 @@
 
     .quiz-container {
         background-color: #fff;
-        border-radius: 10px;
         box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
         width: 600px;
         overflow: hidden;
+        text-decoration-color: black;
     }
 
     .quiz-header {
@@ -82,10 +102,12 @@
         background-color: #44b927;
     }
 </style>
-<body>
+<body id="body" >
+
 <div class="quiz-container" id="quiz">
     <div class="quiz-header">
-        <h2 id="question"><input type="hidden" id="questionId"  value=""> Question Text</h2>
+        <input type="hidden" value="${storyId}" name="story_id" id="story_id">
+        <h2 id="question">Question Text <input type="hidden" name="questionId" id="questionId"></h2>
         <ul>
             <li>
                 <input type="radio" name="answer" id="a" class="answer">
@@ -105,28 +127,17 @@
             </li>
         </ul>
     </div>
+
+    <input type="hidden" id="grammar_id" name="grammarId" value="1">
+    <input type="hidden" id="user_id" name="user_id" value="2">
     <button id="submit">Submit</button>
+
 </div>
-<input type="hidden" name="answer" id="userAnswer" value="">
+
 
 <script>
-    const answerEls = document.querySelectorAll('.answer')
-    let score = 0
-    deselectAnswers()
-    function deselectAnswers() {
-        answerEls.forEach(answerEl => answerEl.checked = false)
-    }
-    function getSelected() {
-        let answer
-        answerEls.forEach(answerEl => {
-            if (answerEl.checked) {
-                answer = answerEl.id
-            }
-        })
-        const questionId = document.getElementById("questionId")
-        document.getElementById("userAnswer").value = answer + "," + questionId.value
-        deselectAnswers()
-    }
+    <jsp:include page="js/practise/vocab.js"></jsp:include>
 </script>
+
 </body>
 </html>

@@ -34,7 +34,8 @@ public class LoginValidationFilter implements Filter {
             if (errors.isEmpty()) {
                 chain.doFilter(request, response);
             } else {
-                UserValidator.setErrorAttributes(req, errors);
+//                UserValidator.setErrorAttributes(req, errors);
+                errors.forEach(req::setAttribute);
                 req.getRequestDispatcher("views/authorization/login.jsp").forward(req, res);
             }
         } else {

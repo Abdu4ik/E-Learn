@@ -24,7 +24,7 @@ public class UsersTestsHistory implements BaseEntity {
     @Column(nullable = false)
     private Integer question_id;
     @Column(nullable = false)
-    private Integer is_correct;
+    private boolean is_correct;
     private Integer score;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime created_at;

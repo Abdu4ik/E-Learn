@@ -10,7 +10,6 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GrammarDAO extends BaseDAO<Grammar, Integer> {
-    private static final ThreadLocal<GrammarDAO> grammarDAOThreadLocal = ThreadLocal.withInitial(GrammarDAO::new);
 
     public List<Grammar> getPage(int page, int size) {
         begin();
@@ -19,10 +18,6 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         query.setMaxResults(size);
         commit();
         return query.getResultList();
-    }
-
-    public static GrammarDAO getInstance() {
-        return grammarDAOThreadLocal.get();
     }
 
 
@@ -38,5 +33,16 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         TypedQuery<Grammar> query = em.createQuery("from Grammar s where s.deleted=false order by createdAt desc", Grammar.class);
         commit();
         return query.getResultList();
+    }
+    public Grammar getStoryWithOption( String userLevel) {
+        begin();
+        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel", Grammar.class)
+                .setParameter("userLevel", userLevel).getSingleResult();
+        commit();
+        return grammar;
+    }
+
+    public static GrammarDAO getInstance() {
+        return new GrammarDAO();
     }
 }

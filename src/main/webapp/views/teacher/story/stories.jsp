@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.Story" %>
 <%@ page import="java.util.ArrayList" %>
@@ -30,12 +31,12 @@
             <td colspan="6" style="text-align: center"><h2>No stories found</h2></td>
         </tr>
         <div class="col-12 offset-1">
-            <a href="/teacher/story/add" class="btn btn-primary" type="submit"> Add </a>
+            <a href="<c:url value="/teacher/story/add"/>" class="btn btn-primary" type="submit"> Add </a>
         </div>
         <%} else {%>
         <h2 style="text-align: center; color: #0f5132; background-color: #9ec5fe; align-self: center">Stories</h2>
         <div class="col-12 offset-1">
-            <a href="/teacher/story/add" class="btn btn-primary" type="submit"> Add </a>
+            <a href="/story/add" class="btn btn-primary" type="submit"> Add </a>
         </div>
         <thead>
         <tr>

@@ -1,5 +1,6 @@
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.Grammar" %>
-<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.ReadStoryServlet.ReadStoryServlet" %><%--
+<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.story.StoryServlet" %><%--
+
   Created by IntelliJ IDEA.
   User: manguberdi
   Date: 15/02/23
@@ -7,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -59,7 +61,7 @@
     }
 </style>
 
-<body onload="LoadPdfFromUrl('uploads/files/stories/Animal Tales.pdf')" style="background-color: #F3F3F3">
+<body onload="LoadPdfFromUrl('${file}')" style="background-color: #F3F3F3">
 
 <form class="container-fluid fs-5">
     <div class="row mb-2">
@@ -74,7 +76,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -82,8 +84,8 @@
                                 Practice
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Reading</a></li>
-                                <li><a class="dropdown-item" href="#">Grammar</a></li>
+                                <li><a class="dropdown-item" href="/grammar">Grammar</a></li>
+                                <li><a class="dropdown-item" href="/vocabulary">Vocabulary</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -125,7 +127,11 @@
                 data-bs-target="#myModal">
             Recommended words
         </button>
-        <button type="button" class="btn btn-outline-success  col-2  offset-1" data-bs-toggle="modal"
+        <button type="button" class="btn btn-outline-success  col-1  offset-1" data-bs-toggle="modal"
+                data-bs-target="#addWordModal">
+           Add new word
+        </button>
+        <button type="button" class="btn btn-outline-success  col-1  offset-1" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
             Finish reading
         </button>
@@ -135,16 +141,19 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+
                         <h5 class="modal-title" id="staticBackdropLabel">Finish lesson</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         Are you confirm?
                     </div>
-                    <div class="modal-footer">
+                    <form method="post" action="http://localhost:8080/reading" class="modal-footer d-flex offset-1">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Yes</button>
-                    </div>
+                        <input value="${storyId}" name="storyId" type="hidden">
+                        <input value="${userId}" name="userId" type="hidden">
+                        <button type="submit" class="btn btn-success">Yes</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -155,19 +164,57 @@
                         <h5 class="modal-title" id="exampleModalLabel">Story feedback</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <form method="post" action="/ReadStoryServlet">
+                    <form method="post" action="http://localhost:8080/reading">
+
+                        <div class="modal-body">
+
                             <div>
+                                <input value="${storyId}" name="storyId" type="hidden">
+                                <input value="${userId}" name="userId" type="hidden">
                                 <label for="message-text" class="col-form-label">Feedback:</label>
-                                <textarea class="form-control" placeholder="Optional()" id="message-text"
-                                          name="feedBack"></textarea>
+                                <input class="form-control" placeholder="Optional" id="message-text"
+                                       name="feedback">
                             </div>
-                        </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Send message</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal fade" id="addWordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="wordModalLabel">Adding new word</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send message</button>
-                    </div>
+                    <form method="post" action="http://localhost:8080/reading">
+                        <div class="modal-body">
+
+                            <div>
+                                <input value="${storyId}" name="storyId" type="hidden">
+
+                                <input value="${true}" name="addWord" type="hidden">
+                                <input value="${userId}" name="userId" type="hidden">
+                                <label for="message-text" class="col-form-label">English word:</label>
+                                <input class="form-control" placeholder="Enter english word" id="eword"
+                                       name="eword">
+                                <label for="message-text" class="col-form-label">Meaning:</label>
+                                <input class="form-control" placeholder="Enter meaning" id="uword"
+                                       name="uword">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -182,31 +229,12 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <h3>Some text to enable scrolling..</h3>
-                        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                            anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat.</p>
-                        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                            anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat.</p>
-
-                        <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                            anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat.</p>
+                        ${vocabularyList}
+                        <c:forEach var="vocabluary" items="${vocubuluryList}">
+                            <ul>
+                                <li>${vocabluary.word}-${vocabluary.meaning}</li>
+                            </ul>
+                        </c:forEach>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -248,6 +276,7 @@
 
     function LoadPdfFromUrl(url) {
         //Read PDF from URL.
+        console.log(url)
         pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
             pdfDoc = pdfDoc_;
 
