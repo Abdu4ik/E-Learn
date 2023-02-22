@@ -3,11 +3,11 @@ package com.tafakkoor.englishlearningplatform.dao;
 
 import com.tafakkoor.englishlearningplatform.domains.User_Story;
 
+import java.util.List;
 import java.util.Objects;
 
 public class UserStoryDAO extends BaseDAO<User_Story, Integer> {
 
-    private static final ThreadLocal<UserStoryDAO> userStoryDAOThreadLocal = ThreadLocal.withInitial(UserStoryDAO::new);
 
     public boolean isSaved( Integer storyId, Integer userId ) {
         begin();
@@ -20,7 +20,17 @@ public class UserStoryDAO extends BaseDAO<User_Story, Integer> {
         return true;
     }
 
+
+    public List<Integer> getStoriesByUserId(Integer userId) {
+        begin();
+        List<Integer> storyIds = em.createNativeQuery("select story_id from user_story where user_id = :userId", Integer.class)
+                .setParameter("userId", userId)
+                .getResultList();
+        commit();
+        return storyIds;
+    }
+
     public static UserStoryDAO getInstance() {
-        return userStoryDAOThreadLocal.get();
+        return new UserStoryDAO();
     }
 }

@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "GrammarAddServlet", value = "/teacher/grammar/add")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\resources\\files")
+@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
 public class GrammarAddServlet extends HttpServlet {
     public static final String projectPath = System.getProperty("user.dir");
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/apps/library/upload");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
 
     @Override
     public void init() throws ServletException {
@@ -44,7 +44,6 @@ public class GrammarAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: 2/19/2023 avval filterda tekshirish kerak
         String title = request.getParameter("title");
         String score = request.getParameter("score");
         String level = request.getParameter("level");
@@ -56,7 +55,7 @@ public class GrammarAddServlet extends HttpServlet {
         Document document = Document.builder()
                 .generatedFileName(generatedName)
                 .originalFileName(originalName)
-                .filePath(rootPath.resolve(generatedName).toString())
+                .filePath("uploads/files/stories/" + generatedName)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
         file.write(generatedName);
@@ -67,7 +66,7 @@ public class GrammarAddServlet extends HttpServlet {
                 .document(document)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
-        GrammarDAO.getInstance().save(grammar);
+        new GrammarDAO().save(grammar);
 
         String option1 = request.getParameter("option1");
         String option2 = request.getParameter("option2");
@@ -87,7 +86,6 @@ public class GrammarAddServlet extends HttpServlet {
 
 
         response.sendRedirect("/teacher/grammar/list");
-        // TODO: 2/19/2023 questionni ham saqlash kerak
     }
 
     private void saveQuestionOptions(Questions questions, String correctOption, String... options) {

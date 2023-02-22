@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GrammarDAO extends BaseDAO<Grammar, Integer> {
-    private static final ThreadLocal<GrammarDAO> grammarDAOThreadLocal = ThreadLocal.withInitial(GrammarDAO::new);
 
     public List<Grammar> getPage(int page, int size) {
         begin();
@@ -21,9 +19,6 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         return query.getResultList();
     }
 
-    public static GrammarDAO getInstance() {
-        return grammarDAOThreadLocal.get();
-    }
 
 
     public List<Grammar> findAllStories() {
@@ -37,13 +32,19 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         begin();
         TypedQuery<Grammar> query = em.createQuery("from Grammar s where s.deleted=false order by createdAt desc", Grammar.class);
         commit();
+//        System.out.println();
         return query.getResultList();
+
     }
     public Grammar getStoryWithOption( String userLevel) {
         begin();
-        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel", Grammar.class)
+        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel order by random() limit 1", Grammar.class)
                 .setParameter("userLevel", userLevel).getSingleResult();
         commit();
         return grammar;
+    }
+
+    public static GrammarDAO getInstance() {
+        return new GrammarDAO();
     }
 }

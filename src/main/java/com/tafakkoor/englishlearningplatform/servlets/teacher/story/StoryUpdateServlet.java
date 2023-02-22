@@ -13,16 +13,15 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @WebServlet(name = "ServletStoryUpdateServlet", value = "/teacher/story/update/*")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\resources\\files")
+@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
 public class StoryUpdateServlet extends HttpServlet {
 
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/apps/library/upload");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -73,7 +72,7 @@ public class StoryUpdateServlet extends HttpServlet {
             document = Document.builder()
                     .generatedFileName(generatedName)
                     .originalFileName(originalName)
-                    .filePath(rootPath.resolve(generatedName).toString())
+                    .filePath("uploads/files/stories/" + generatedName)
                     .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                     .build();
             file.write(generatedName);
@@ -91,7 +90,7 @@ public class StoryUpdateServlet extends HttpServlet {
         story.setDocument(Objects.requireNonNullElse(document, story.getDocument()));
 
         TeacherService.getInstance().updateStory(story);
-        new StoryDAO().update(story);
+//        new StoryDAO().update(story);
 //        CompletableFuture.runAsync(() -> {
         VocabularyDAO vocabularyDAO = new VocabularyDAO();
         try {

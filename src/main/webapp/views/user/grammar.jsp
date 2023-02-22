@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.Grammar" %>
-<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.StoryServlet" %><%--
+<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.story.StoryServlet" %><%--
   Created by IntelliJ IDEA.
   User: manguberdi
   Date: 15/02/23
@@ -62,7 +62,7 @@
 
 <body onload="LoadPdfFromUrl('${file}')" style="background-color: #F3F3F3">
 
-<form class="container-fluid fs-5 col-md-10 offset-1">
+<div class="container-fluid fs-5 col-md-10 offset-1">
     <div class="row mb-2">
         <nav class="navbar navbar-expand-lg navbar-light bg-danger">
             <div class="container-fluid">
@@ -96,15 +96,14 @@
         <div id="pdf_container" class="col-md-10 offset-1 bg-body-secondary col-dialog-scrollablesm-11 m-4"></div>
     </div>
     <div class="row ">
-        <form action="http://localhost:8080/grammar/test">
+        <form method="post" action="/grammar">
             <input type="hidden" value="${grammarId}" name="grammarId">
-            <a href="/grammar/test" type="submit" class="btn btn-outline-primary text-center col-md-10 offset-1">
+            <button type="submit" class="btn btn-outline-primary text-center col-md-4 offset-4">
                 Take test
-            </a>
+            </button>
         </form>
-        <!-- Button trigger modal --><button type="button" class="btn btn-success" href="grammar/test">Take a test</button>
     </div>
-</form>
+</div>
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>

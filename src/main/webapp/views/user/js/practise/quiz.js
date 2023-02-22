@@ -9,7 +9,6 @@ const d_text = document.getElementById('d_text')
 const userId = document.getElementById('user_id').value
 const submitBtn = document.getElementById('submit')
 const body = document.getElementById('body')
-const current_quiz = document.getElementById('current_quiz')
 let currentQuiz = 0
 let score = 0
 let quizData = (function getQuestions() {
@@ -17,11 +16,12 @@ let quizData = (function getQuestions() {
     fetch('http://localhost:8080/questions/get/' + grammar_id)
         .then(response => response.json())
         .then(json => {
+            console.log(json)
             quizData = json
             loadQuiz()
         })
 });
-
+body.onload=quizData()
 function deselectAnswers() {
     answerEls.forEach(answerEl => answerEl.checked = false)
 }

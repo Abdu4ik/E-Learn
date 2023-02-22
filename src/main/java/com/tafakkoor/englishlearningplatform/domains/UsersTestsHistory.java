@@ -3,7 +3,6 @@ package com.tafakkoor.englishlearningplatform.domains;
 import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -26,10 +25,7 @@ public class UsersTestsHistory implements BaseEntity {
     private Integer question_id;
     @Column(nullable = false)
     private boolean is_correct;
-    @Column(nullable = false)
     private Integer score;
-    @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    @Builder.Default
-    private LocalDateTime created_at = LocalDateTime.now();
+    private LocalDateTime created_at;
 }

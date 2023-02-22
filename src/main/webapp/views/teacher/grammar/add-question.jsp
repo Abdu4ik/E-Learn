@@ -21,8 +21,8 @@
             color: #fff;
         }
 
-        .wrapper {
-            width: 400px;
+        .wrapper1 {
+            width: 800px;
             margin: 40px auto;
             padding: 10px;
             border-radius: 5px;
@@ -75,20 +75,21 @@
 <h1 class="text-center" style="margin-top: 30px; margin-bottom: 30px">Enter new question</h1>
 <h4 style="text-align: center">Add question related to the topic</h4>
 
-<form class="row g-3" method="post" enctype="multipart/form-data">
+<form class="row g-3" method="post" action="/teacher/grammar/add-question/${grammar.getId()}">
 
-    <div class="wrapper" style="background-color: white">
-
-        <label for="question" class="form-label">Insert question</label>
-        <textarea style="background-color: whitesmoke" type="text" class="b" id="question" name="question" placeholder="Enter question" required></textarea>
+    <div class="offset-1">
+        <label for="question">Insert question here</label>
+        <input type="text" class="form-control" id="question" name="question" placeholder="Enter question">
     </div>
-    <div class="wrapper" style="background-color: white">
-        <label for="question" class="form-label">Enter options here</label>
 
-        <input style="background-color: whitesmoke" type="text" class="b" id="option1" name="option1" placeholder="Enter option 1" required>
-        <input style="background-color: whitesmoke" type="text" class="b" id="option2" name="option2" placeholder="Enter option 2" required>
-        <input style="background-color: whitesmoke" type="text" class="b" id="option3" name="option3" placeholder="Enter option 3" required>
-        <input style="background-color: whitesmoke" type="text" class="b" id="option4" name="option4" placeholder="Enter option 4" required>
+    <div class="wrapper1 offset-1">
+        <label for="answer1">Insert answer here</label>
+        <input type="text" class="form-control" id="answer1" name="option1" placeholder="option 1">
+        <input type="text" class="form-control" id="answer2" name="option2" placeholder="option 2">
+        <input type="text" class="form-control" id="answer3" name="option3" placeholder="option 3">
+        <input type="text" class="form-control" id="answer4" name="option4" placeholder="option 4">
+    </div>
+    <div class="wrapper1 offset-1">
         <label for="correctAnswer" class="form-label">Choose correct answer</label>
         <select id="correctAnswer" name="correctAnswer" required >
             <option selected="true" disabled="disabled">Select a Option</option>
@@ -100,7 +101,8 @@
     </div>
 
     <div class="col-12 offset-1">
-        <button class="btn btn-primary" type="submit">Add topic</button>
+        <a class="btn btn-secondary" href="/teacher/grammar/list" type="submit"> Back </a>
+        <button class="btn btn-primary" type="submit">Add question</button>
     </div>
 </form>
 </body>

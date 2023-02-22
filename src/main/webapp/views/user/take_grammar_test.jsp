@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.Variants" %>
-<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.StoryServlet" %>
+<%@ page import="com.tafakkoor.englishlearningplatform.servlets.user.story.StoryServlet" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.tafakkoor.englishlearningplatform.domains.QuizHelper" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -127,8 +127,8 @@
         </ul>
     </div>
 
-    <input type="hidden" id="grammar_id" name="grammarId" value="1">
-    <input type="hidden" id="user_id" name="user_id" value="2">
+    <input type="hidden" id="grammar_id" name="grammarId" value="${grammarId}">
+    <input type="hidden" id="user_id" name="user_id" value="${userId}">
     <button id="submit" >Submit</button>
 
 </div>

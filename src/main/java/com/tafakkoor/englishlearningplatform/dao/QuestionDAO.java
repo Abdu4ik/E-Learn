@@ -11,8 +11,6 @@ import java.util.List;
 public class QuestionDAO extends BaseDAO<Questions, Integer> {
 
 
-    private static final ThreadLocal<QuestionDAO> questionDAOThreadLocal = ThreadLocal.withInitial(QuestionDAO::new);
-
 
 
     public List<Questions> findAllByGrammarId( Integer id ) {
@@ -22,8 +20,8 @@ public class QuestionDAO extends BaseDAO<Questions, Integer> {
         return questionsList;
     }
 
-
     public static QuestionDAO getInstance() {
-        return questionDAOThreadLocal.get();
+        return new QuestionDAO();
     }
+
 }

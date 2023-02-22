@@ -73,7 +73,7 @@
 </head>
 <body>
 
-<h1 class="text-center" style="margin-top: 30px; margin-bottom: 30px">Fill in the story form</h1>
+<h1 class="text-center" style="margin-top: 30px; margin-bottom: 30px">Change fields that you want to edit in story</h1>
 
 <form class="row g-3" method="post" enctype="multipart/form-data">
     <div class="col-md-5 offset-1">

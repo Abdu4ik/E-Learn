@@ -1,13 +1,13 @@
 package com.tafakkoor.englishlearningplatform.servlets.teacher.story;
 
-import com.tafakkoor.englishlearningplatform.dao.StoryDAO;
-import com.tafakkoor.englishlearningplatform.dao.UserDAO;
+
 import com.tafakkoor.englishlearningplatform.dao.VocabularyDAO;
 import com.tafakkoor.englishlearningplatform.domains.Document;
 import com.tafakkoor.englishlearningplatform.domains.Story;
 import com.tafakkoor.englishlearningplatform.domains.Users;
 import com.tafakkoor.englishlearningplatform.domains.Vocabulary;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
+import com.tafakkoor.englishlearningplatform.service.TeacherService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,10 +24,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "StoryAddServlet", value = "/teacher/story/add")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\resources\\files")
+@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
 public class StoryAddServlet extends HttpServlet {
     public static final String projectPath = System.getProperty("user.dir");
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/apps/library/upload");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
 
     @Override
     public void init() throws ServletException {
@@ -66,7 +66,7 @@ public class StoryAddServlet extends HttpServlet {
         Document document = Document.builder()
                 .generatedFileName(generatedName)
                 .originalFileName(originalName)
-                .filePath(rootPath.resolve(generatedName).toString())
+                .filePath("uploads/files/stories/" + generatedName)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
         file.write(generatedName);
@@ -81,8 +81,8 @@ public class StoryAddServlet extends HttpServlet {
                 .build();
 
 
+        TeacherService.getInstance().saveStory(story);
 
-        new StoryDAO().save(story);
 //        CompletableFuture.runAsync(() -> {
             VocabularyDAO vocabularyDAO = new VocabularyDAO();
             try {
@@ -118,7 +118,7 @@ public class StoryAddServlet extends HttpServlet {
 //                    .originalFileName(originalName)
 //                    .fileSize(size)
 //                    .mimeType(mimeType)
-//                    .filePath(rootPath.resolve(generatedName).toString())
+//                    .filePath("uploads/files/stories/" + generatedName)
 //                    .extension(extension)
 //                    .build();
 //            documentDAO.save(document);
