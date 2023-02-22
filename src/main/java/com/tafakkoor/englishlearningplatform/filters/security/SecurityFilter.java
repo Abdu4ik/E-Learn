@@ -25,7 +25,7 @@ public class SecurityFilter implements Filter {
             "/resources/.+",
             "/views/.+",
             "/fragments/.+",
-            "/user",
+//            "/user",
             "/questions/.+",
             "/vocabulary/.+",
             "/uploads/.+"

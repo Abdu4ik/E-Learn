@@ -13,6 +13,7 @@ public class LogOutServlet extends HttpServlet {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("remember_me")) {
+                cookie.setPath("/");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }

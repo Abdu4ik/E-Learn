@@ -63,7 +63,7 @@ public class UserService {
         return isCorrectPassword(password, user.getPassword());
     }
 
-    public static void changePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void changePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userId = request.getParameter("user_id");
         String newPassword = request.getParameter("new_password");
 

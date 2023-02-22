@@ -21,6 +21,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
+<c:set var="firstname" value="${(not empty user.getFirstName())? user.getFirstName() : 'Firstname'}"/>
+<c:set var="lastname" value="${(not empty user.getLastName())? user.getLastName() : 'Lastname'}"/>
 <body>
 <section class="py-5 my-5">
     <form method="post" action="/change-password">
@@ -32,7 +34,7 @@
                         <div class="img-circle text-center mb-3">
                             <img src="views/user/account-setting/img/user2.jpg" alt="Image" class="shadow">
                         </div>
-                        <h4 class="text-center">${fullname}</h4>
+                        <h4 class="text-center">${firstname.concat(' '.concat(lastname))}</h4>
                     </div>
                     <div class="nav flex-column nav-pills" id="password-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link" href="/profile">

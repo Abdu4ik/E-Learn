@@ -22,8 +22,8 @@
 
 </head>
 <body>
-<c:set var="firstname" value="${(not empty user.getFirstName())? user.getFirstName() : 'Enter your Firstname' }"/>
-<c:set var="lastname" value="${(not empty user.getLastName())? user.getLastName() : 'Enter your Lastname' }"/>
+<c:set var="firstname" value="${(not empty user.getFirstName())? user.getFirstName() : 'Firstname'}"/>
+<c:set var="lastname" value="${(not empty user.getLastName())? user.getLastName() : 'Lastname'}"/>
 <c:set var="email" value="${user.getEmail()}"/>
 <c:set var="username" value="${user.getUsername()}"/>
 <c:set var="score" value="${user.getScore()}"/>
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>First Name</label>
+                                    <label>Firstname</label>
                                     <input type="hidden" name="user_id" value="${user_id}">
                                     <input type="text" class="form-control" name="firstname" value="${firstname}">
                                 </div>
@@ -78,7 +78,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Last Name</label>
+                                    <label>Lastname</label>
                                     <input type="text" class="form-control" name="lastname" value="${lastname}">
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                             <% if (((Users) request.getSession().getAttribute("user")).getLevel().toString().equals("DEFAULT")) {%>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label style="font-size: smaller; color: red; margin-top: -16px">You have not taken the english assessment test to determine your level please click on the button below to take the test</label>
+                                <label style="font-size: smaller; color: red; margin-top: -16px">You have not taken the english assessment test to determine your level. Please take the test!</label>
                                 <a href="/assessment" class="btn btn-primary">Take the test</a>
                                 </div>
                             </div>

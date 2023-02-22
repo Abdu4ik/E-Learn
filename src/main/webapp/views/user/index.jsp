@@ -58,7 +58,8 @@
                             <li><a href="/grammar">Grammar</a></li>
                             <li><a href="/vocabulary">Vocabulary</a></li>
                         </ul>
-                            <% if (request.getCookies() != null && Arrays.stream(request.getCookies()).anyMatch(cookie -> cookie.getName().equalsIgnoreCase("remember_me"))) { %>
+<%--                            <% if (request.getCookies() != null && Arrays.stream(request.getCookies()).anyMatch(cookie -> cookie.getName().equalsIgnoreCase("remember_me"))) { %>--%>
+                            <% if (session.getAttribute("user_id") != null) { %>
                     <li class="menu-has-children"><a href="#">Logged in</a>
                         <ul>
                             <li><a href="/profile">Go to Profile</a></li>
