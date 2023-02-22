@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class UserValidator {
 
-    public static final String USERNAME_REGEX = "^[a-zA-Z0-9_-]{3,15}$";
-    public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.!_])(?=\\S+$).{8,20}$";
+    public static final String USERNAME_REGEX = "^[a-zA-Z0-9_-]{3,25}$";
+    public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.!_])(?=\\S+$).{7,20}$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
 
     public static boolean validateUsername(String username) {
