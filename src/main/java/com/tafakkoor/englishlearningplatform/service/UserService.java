@@ -103,6 +103,8 @@ public class UserService {
             for (Vocabulary vocab : vocabulariesByStoryId) {
                 vocabularyList.add(vocab.getMeaning());
             }
+            //  todo javohir yozdi
+            vocabularyList.remove(vocabulariesByStoryId.get(i).getMeaning());
             Collections.shuffle(vocabularyList);
             vocabularyList = vocabularyList.subList(0, 3);
             vocabularyList.add(vocabulariesByStoryId.get(i).getMeaning());
@@ -113,7 +115,6 @@ public class UserService {
                     a(vocabularyList.get(0)).b(vocabularyList.get(1)).c(vocabularyList.get(2)).d(vocabularyList.get(3)).
                     correct(getCorrectValue(vocabularyList, vocabulariesByStoryId.get(i).getMeaning())).build();
             quizHelperList.add(vocabHelperTest);
-            System.out.println(quizHelperList);
         }
         return quizHelperList;
     }
