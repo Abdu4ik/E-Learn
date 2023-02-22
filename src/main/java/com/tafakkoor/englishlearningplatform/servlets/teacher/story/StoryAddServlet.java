@@ -1,7 +1,6 @@
 package com.tafakkoor.englishlearningplatform.servlets.teacher.story;
 
-import com.tafakkoor.englishlearningplatform.dao.StoryDAO;
-import com.tafakkoor.englishlearningplatform.dao.UserDAO;
+
 import com.tafakkoor.englishlearningplatform.dao.VocabularyDAO;
 import com.tafakkoor.englishlearningplatform.domains.Document;
 import com.tafakkoor.englishlearningplatform.domains.Story;
@@ -82,7 +81,7 @@ public class StoryAddServlet extends HttpServlet {
 
 
 
-        new StoryDAO().save(story);
+        new com.tafakkoor.englishlearningplatform.dao.StoryDAO().save(story);
 //        CompletableFuture.runAsync(() -> {
             VocabularyDAO vocabularyDAO = new VocabularyDAO();
             try {

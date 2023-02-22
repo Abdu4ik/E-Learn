@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VocabularyDAO extends BaseDAO<Vocabulary, Integer> {
 
 
