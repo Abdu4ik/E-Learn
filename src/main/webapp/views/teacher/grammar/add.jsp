@@ -115,10 +115,10 @@
     <div class="wrapper" style="background-color: white">
         <label for="question" class="form-label">Enter options here</label>
 
-        <input style="background-color: whitesmoke" type="text" class="b" id="option1" name="option" placeholder="Enter option 1" required>
-        <input style="background-color: whitesmoke" type="text" class="b" id="option2" name="option" placeholder="Enter option 2" required>
-        <input style="background-color: whitesmoke" type="text" class="b" id="option3" name="option" placeholder="Enter option 3" required>
-        <input style="background-color: whitesmoke" type="text" class="b" id="option4" name="option" placeholder="Enter option 4" required>
+        <input style="background-color: whitesmoke" type="text" class="b" id="option1" name="option1" placeholder="Enter option 1" required>
+        <input style="background-color: whitesmoke" type="text" class="b" id="option2" name="option2" placeholder="Enter option 2" required>
+        <input style="background-color: whitesmoke" type="text" class="b" id="option3" name="option3" placeholder="Enter option 3" required>
+        <input style="background-color: whitesmoke" type="text" class="b" id="option4" name="option4" placeholder="Enter option 4" required>
         <label for="correctAnswer" class="form-label">Choose correct answer</label>
         <select id="correctAnswer" name="correctAnswer" required >
             <option selected="true" disabled="disabled">Select a Option</option>

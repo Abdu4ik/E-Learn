@@ -3,7 +3,10 @@ package com.tafakkoor.englishlearningplatform.servlets.teacher.grammar;
 import com.tafakkoor.englishlearningplatform.dao.GrammarDAO;
 import com.tafakkoor.englishlearningplatform.domains.Document;
 import com.tafakkoor.englishlearningplatform.domains.Grammar;
+import com.tafakkoor.englishlearningplatform.domains.Questions;
+import com.tafakkoor.englishlearningplatform.domains.Variants;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
+import com.tafakkoor.englishlearningplatform.service.TeacherService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -31,6 +34,7 @@ public class GrammarAddServlet extends HttpServlet {
         }
         super.init();
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Levels> levels = List.of(Levels.values());
@@ -64,9 +68,36 @@ public class GrammarAddServlet extends HttpServlet {
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
         GrammarDAO.getInstance().save(grammar);
+
+        String option1 = request.getParameter("option1");
+        String option2 = request.getParameter("option2");
+        String option3 = request.getParameter("option3");
+        String option4 = request.getParameter("option4");
+        String correctAnswer = request.getParameter("correctAnswer");
+        String question = request.getParameter("question");
+
+        Questions questions = Questions.builder()
+                .grammar(grammar)
+                .title(question)
+                .build();
+
+        TeacherService.getInstance().saveQuestion(questions);
+
+        saveQuestionOptions(questions, correctAnswer, option1, option2, option3, option4);
+
+
         response.sendRedirect("/teacher/grammar/list");
-
-
         // TODO: 2/19/2023 questionni ham saqlash kerak
     }
+
+    private void saveQuestionOptions(Questions questions, String correctOption, String... options) {
+        for (int i = 0; i < options.length; i++) {
+            Variants variants = new Variants();
+            variants.setQuestions(questions);
+            variants.setVariant(options[i]);
+            variants.setCorrect(String.valueOf(i + 1).equals(correctOption));
+            TeacherService.getInstance().saveVariant(variants);
+        }
+    }
 }
+

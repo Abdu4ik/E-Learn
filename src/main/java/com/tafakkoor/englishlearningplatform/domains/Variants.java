@@ -20,7 +20,7 @@ public class Variants implements BaseEntity {
     private Integer id;
     private String variant;
     private boolean isCorrect;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Questions questions;
 
     @Override

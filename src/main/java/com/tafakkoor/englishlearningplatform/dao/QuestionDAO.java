@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor( access = AccessLevel.PRIVATE )
 public class QuestionDAO extends BaseDAO<Questions, Integer> {
 
 

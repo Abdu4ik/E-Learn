@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoryDAO extends BaseDAO<Story, Integer> {
 
     public List<Story> getPage(int page, int size) {
@@ -18,7 +17,33 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
         commit();
         return query.getResultList();
     }
+    @Override
+    public boolean delete( Story story ) {
+        delete(story.getId());
+        return true;
+    }
 
+    public boolean delete( Integer id ) {
+        begin();
+        em.createNativeQuery("update story set deleted = true where id = :id;").setParameter("id", id);
+        commit();
+        return true;
+    }
+
+
+
+
+    public Story getStoryWithOption( String userLevel, Integer userId ) {
+        begin();
+        Story story =(Story) em.createNativeQuery("select *\n" +
+                        "from story\n" +
+                        "where level = :level\n" +
+                        "  and id not in (select story_id from user_story where user_id = :userId and is_saved = true);", Story.class)
+                .setParameter("level", userLevel)
+                .setParameter("userId", userId).getSingleResult();
+        commit();
+        return story;
+    }
 
 
     public List<Story> findAllStories() {

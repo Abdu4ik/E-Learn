@@ -59,6 +59,7 @@
             <td><%=grammar.getCreatedAt().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"))%>
             </td>
             <td>
+                <a class="btn btn-primary" href="/teacher/grammar/add-question/<%=grammar.getId()%>">Add question</a> ||
                 <a class="btn btn-warning" href="/teacher/grammar/update/<%=grammar.getId()%>">Update</a> ||
                 <a class="btn btn-danger" href="/teacher/grammar/delete/<%=grammar.getId()%>">Delete</a>
             </td>
