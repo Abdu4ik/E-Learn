@@ -1,15 +1,9 @@
 package com.tafakkoor.englishlearningplatform.servlets.auth;
 
-import com.tafakkoor.englishlearningplatform.dao.UserDAO;
-import com.tafakkoor.englishlearningplatform.domains.Users;
 import com.tafakkoor.englishlearningplatform.service.UserService;
-import com.tafakkoor.englishlearningplatform.utils.AES;
-import com.tafakkoor.englishlearningplatform.utils.Encrypt;
-import com.tafakkoor.englishlearningplatform.utils.Utils;
 import com.tafakkoor.englishlearningplatform.utils.validator.UserValidator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,9 +24,8 @@ public class RegisterServlet extends HttpServlet {
         Map<String, String> errors = UserValidator.validate(request);
 
         if (errors.isEmpty()) {
-            UserService.register(request, response);
+            UserService.getInstance().register(request, response);
         } else {
-//            errors.forEach(request::setAttribute);
             UserValidator.setErrorAttributes(request, errors);
             request.getRequestDispatcher("views/authorization/register.jsp").forward(request, response);
         }

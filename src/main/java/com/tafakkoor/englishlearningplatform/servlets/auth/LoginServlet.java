@@ -4,14 +4,12 @@ import com.tafakkoor.englishlearningplatform.dao.UserDAO;
 import com.tafakkoor.englishlearningplatform.domains.Users;
 import com.tafakkoor.englishlearningplatform.service.UserService;
 import com.tafakkoor.englishlearningplatform.utils.AES;
-import com.tafakkoor.englishlearningplatform.utils.Encrypt;
 import com.tafakkoor.englishlearningplatform.utils.Utils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
@@ -38,11 +36,11 @@ public class LoginServlet extends HttpServlet {
             if (user.isDeleted()) {
                 request.setAttribute("error", "Your account has been blocked!");
                 request.getRequestDispatcher("/views/authorization/login.jsp").forward(request, response);
-            }else if (UserService.isCorrectPassword(password, user.getPassword())) {
+            }else if (UserService.getInstance().isCorrectPassword(password, user.getPassword())) {
 
                 String userId = String.valueOf(user.getId());
                 String encrypt = AES.encrypt(userId);
-                Cookie cookie = UserService.createCookie(encrypt);
+                Cookie cookie = UserService.getInstance().createCookie(encrypt);
                 response.addCookie(cookie);
                 response.sendRedirect((url != null) ? url.substring(5) : Utils.redirectByRole(user));
             } else {

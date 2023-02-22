@@ -32,7 +32,7 @@ public class ChangePasswordFilter implements Filter {
 
             if (oldPassword == null || oldPassword.isBlank() || oldPassword.isEmpty()) {
                 errors.put("old_pass_error", "Old password can not be null");
-            } else if (!UserService.isCorrectPass(userId, oldPassword)) {
+            } else if (!UserService.getInstance().isCorrectPass(userId, oldPassword)) {
                 errors.put("old_pass_error", "Incorrect password");
             }
 

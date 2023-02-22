@@ -26,14 +26,14 @@ public class UserService {
         return instance.get();
     }
 
-    public static Cookie createCookie(String value) {
+    public Cookie createCookie(String value) {
         Cookie cookie = new Cookie("remember_me", value);
         cookie.setPath("/");
         cookie.setMaxAge(oneDay);
         return cookie;
     }
 
-    public static void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -49,11 +49,11 @@ public class UserService {
         response.sendRedirect("/login");
     }
 
-    public static boolean isCorrectPassword(String password, String hashedPassword) {
+    public boolean isCorrectPassword(String password, String hashedPassword) {
         return Encrypt.checkPassword(password, hashedPassword);
     }
 
-    public static boolean isCorrectPass(String userId, String password) {
+    public boolean isCorrectPass(String userId, String password) {
         Users user = null;
         try {
             user = UserDAO.getInstance().findById(Long.parseLong(userId));
