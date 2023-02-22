@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class QuestionValidator {
     public void validate(HttpServletRequest request) throws Exception {
         String question = request.getParameter("question");
-        String level = request.getParameter("level");
         String option1 = request.getParameter("option1");
         String option2 = request.getParameter("option2");
         String option3 = request.getParameter("option3");
@@ -15,9 +14,7 @@ public class QuestionValidator {
         if (question == null || question.trim().isEmpty()) {
             throw new Exception("Title is empty");
         }
-        if (level == null || level.trim().isEmpty()) {
-            throw new Exception("Level is empty");
-        }
+
         if (option1 == null || option1.trim().isEmpty()) {
             throw new Exception("Option 1 is empty");
         }
@@ -33,7 +30,8 @@ public class QuestionValidator {
         if (correctAnswer == null || correctAnswer.trim().isEmpty()) {
             throw new Exception("Correct answer is empty");
         }
-
+        if (!correctAnswer.endsWith("1") && !correctAnswer.endsWith("2") && !correctAnswer.endsWith("3") && !correctAnswer.endsWith("4")) {
+            throw new Exception("Correct answer is invalid");
+        }
     }
-
 }

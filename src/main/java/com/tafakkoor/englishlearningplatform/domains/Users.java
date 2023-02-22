@@ -35,6 +35,7 @@ public class Users implements BaseEntity {
     @Builder.Default
     private Roles role = Roles.USER;
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Levels level=Levels.DEFAULT;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

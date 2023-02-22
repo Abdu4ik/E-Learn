@@ -63,7 +63,7 @@ public class GrammarUpdateServlet extends HttpServlet {
             Document.builder()
                     .generatedFileName(generatedName)
                     .originalFileName(originalName)
-                    .filePath("/uploads/files/stories/" + generatedName)
+                    .filePath("uploads/files/stories/" + generatedName)
                     .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                     .build();
             file.write(generatedName);

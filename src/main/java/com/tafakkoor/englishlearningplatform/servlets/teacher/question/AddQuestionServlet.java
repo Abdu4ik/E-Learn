@@ -32,6 +32,7 @@ public class AddQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String grammarId = request.getPathInfo().substring(1);
         try {
+            TeacherService.getInstance().validateQuestion(request);
             Grammar grammar=TeacherService.getInstance().getGrammarById(Integer.parseInt(grammarId));
             String option1 = request.getParameter("option1");
             String option2 = request.getParameter("option2");
@@ -48,7 +49,7 @@ public class AddQuestionServlet extends HttpServlet {
             saveQuestionOptions(questions, correctAnswer, option1, option2, option3, option4);
             response.sendRedirect("/teacher/grammar/update/"+grammarId);
         }catch (Exception e){
-            response.sendRedirect("/teacher/grammar/update/"+grammarId);
+            response.sendRedirect("/teacher/grammar/add-question/"+grammarId);
         }
     }
 

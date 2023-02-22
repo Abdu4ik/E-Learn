@@ -44,7 +44,6 @@ public class GrammarAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: 2/19/2023 avval filterda tekshirish kerak
         String title = request.getParameter("title");
         String score = request.getParameter("score");
         String level = request.getParameter("level");
@@ -56,7 +55,7 @@ public class GrammarAddServlet extends HttpServlet {
         Document document = Document.builder()
                 .generatedFileName(generatedName)
                 .originalFileName(originalName)
-                .filePath("/uploads/files/stories/" + generatedName)
+                .filePath("uploads/files/stories/" + generatedName)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
         file.write(generatedName);

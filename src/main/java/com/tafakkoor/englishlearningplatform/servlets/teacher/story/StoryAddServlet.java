@@ -66,7 +66,7 @@ public class StoryAddServlet extends HttpServlet {
         Document document = Document.builder()
                 .generatedFileName(generatedName)
                 .originalFileName(originalName)
-                .filePath("/uploads/files/stories/" + generatedName)
+                .filePath("uploads/files/stories/" + generatedName)
                 .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
                 .build();
         file.write(generatedName);
@@ -118,7 +118,7 @@ public class StoryAddServlet extends HttpServlet {
 //                    .originalFileName(originalName)
 //                    .fileSize(size)
 //                    .mimeType(mimeType)
-//                    .filePath("/uploads/files/stories/" + generatedName)
+//                    .filePath("uploads/files/stories/" + generatedName)
 //                    .extension(extension)
 //                    .build();
 //            documentDAO.save(document);
