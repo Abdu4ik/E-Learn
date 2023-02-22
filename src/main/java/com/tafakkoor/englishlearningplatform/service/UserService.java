@@ -2,13 +2,17 @@ package com.tafakkoor.englishlearningplatform.service;
 
 import com.tafakkoor.englishlearningplatform.dao.UserDAO;
 import com.tafakkoor.englishlearningplatform.domains.Users;
-import com.tafakkoor.englishlearningplatform.utils.AES;
+import com.tafakkoor.englishlearningplatform.domains.VocabHelperTest;
+import com.tafakkoor.englishlearningplatform.domains.Vocabulary;
 import com.tafakkoor.englishlearningplatform.utils.Encrypt;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class UserService {
     public static final int minutes = 60;
@@ -61,5 +65,29 @@ public class UserService {
         user.setPassword(Encrypt.hashPassword(newPassword));
         instance.update(user);
         response.sendRedirect("/logout");
+    }
+
+    public static List<VocabHelperTest> getQuiz(List<Vocabulary> vocabulariesByStoryId, int storyId, List<VocabHelperTest> quizHelperList) {
+
+        for (int i = 0; i <vocabulariesByStoryId.size() ; i++)  {
+            List<String> vocabularyList = new ArrayList<>();
+            vocabulariesByStoryId.remove(vocabulariesByStoryId.get(i));
+            for (Vocabulary vocab : vocabulariesByStoryId) {
+                vocabularyList.add(vocab.getMeaning());
+            }
+            Collections.shuffle(vocabularyList);
+            vocabularyList = vocabularyList.subList(0, 3);
+            vocabularyList.add(vocabulariesByStoryId.get(i).getMeaning());
+            Collections.shuffle(vocabularyList);
+            vocabulariesByStoryId.add(vocabulariesByStoryId.get(i));
+            VocabHelperTest vocabHelperTest = VocabHelperTest.builder().
+                    vocabulary(vocabulariesByStoryId.get(i).getWord()).
+                    story_id(String.valueOf(storyId)).
+                    a(vocabularyList.get(0)).b(vocabularyList.get(1)).c(vocabularyList.get(2)).d(vocabularyList.get(3)).
+                    correct(vocabulariesByStoryId.get(i).getMeaning()).build();
+            quizHelperList.add(vocabHelperTest);
+            System.out.println(quizHelperList);
+        }
+        return quizHelperList;
     }
 }

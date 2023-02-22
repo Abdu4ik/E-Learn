@@ -102,10 +102,11 @@
         background-color: #44b927;
     }
 </style>
-<body id="body" onload="quizData()">
+<body id="body" >
 
 <div class="quiz-container" id="quiz">
     <div class="quiz-header">
+        <input type="hidden" value="${storyId}" name="story_id" id="story_id">
         <h2 id="question">Question Text <input type="hidden" name="questionId" id="questionId"></h2>
         <ul>
             <li>
@@ -127,15 +128,15 @@
         </ul>
     </div>
 
-    <input type="hidden" id="grammar_id" name="grammarId" value="${grammarId}">
-    <input type="hidden" id="user_id" name="user_id" value="${userId}">
-    <button id="submit" >Submit</button>
+    <input type="hidden" id="grammar_id" name="grammarId" value="1">
+    <input type="hidden" id="user_id" name="user_id" value="2">
+    <button id="submit">Submit</button>
 
 </div>
 
 
 <script>
-    <jsp:include page="js/practise/quiz.js"></jsp:include>
+    <jsp:include page="js/practise/vocab.js"></jsp:include>
 </script>
 
 </body>

@@ -1,5 +1,5 @@
 const quiz = document.getElementById('quiz')
-const grammar_id = document.getElementById('grammar_id').value
+const story_id = document.getElementById('story_id').value
 const answerEls = document.querySelectorAll('.answer')
 const questionEl = document.getElementById('question')
 const a_text = document.getElementById('a_text')
@@ -9,19 +9,20 @@ const d_text = document.getElementById('d_text')
 const userId = document.getElementById('user_id').value
 const submitBtn = document.getElementById('submit')
 const body = document.getElementById('body')
+const current_quiz = document.getElementById('current_quiz')
 let currentQuiz = 0
 let score = 0
-let quizData = (function getQuestions() {
-    console.log(grammar_id)
-    fetch('http://localhost:8080/questions/get/' + grammar_id)
+let vocabQuizData = (function getQuestions() {
+    fetch('http://localhost:8080/vocabulary/get/test/' + story_id)
+
         .then(response => response.json())
         .then(json => {
-            console.log(json)
-            quizData = json
+            vocabQuizData = json
             loadQuiz()
         })
 });
-
+console.log(vocabQuizData)
+body.onload=vocabQuizData()
 function deselectAnswers() {
     answerEls.forEach(answerEl => answerEl.checked = false)
 }
@@ -40,38 +41,38 @@ function getSelected() {
 
 function loadQuiz() {
     deselectAnswers()
-    questionEl.innerText = quizData[currentQuiz].question
-    a_text.innerText = quizData[currentQuiz].a
-    b_text.innerText = quizData[currentQuiz].b
-    c_text.innerText = quizData[currentQuiz].c
-    d_text.innerText = quizData[currentQuiz].d
+    questionEl.innerText = vocabQuizData[currentQuiz].vocabulary
+    a_text.innerText = vocabQuizData[currentQuiz].a
+    b_text.innerText = vocabQuizData[currentQuiz].b
+    c_text.innerText = vocabQuizData[currentQuiz].c
+    d_text.innerText = vocabQuizData[currentQuiz].d
 }
 
 
 submitBtn.addEventListener('click', () => {
     let answer = getSelected()
-    let questionId = quizData[currentQuiz].questionId
-    let isCorrect = quizData[currentQuiz].correct===answer
-    let isLastQuestion = currentQuiz === quizData.length - 1
-    fetch('http://localhost:8080/grammar/test', {
+    let questionId = vocabQuizData[currentQuiz].story_id
+    let isCorrect = vocabQuizData[currentQuiz].correct===answer
+    let isLastQuestion = currentQuiz === vocabQuizData.length - 1
+    fetch('http://localhost:8080/vocabulary/test/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
 
-        body: JSON.stringify({   userId ,questionId ,isCorrect , isLastQuestion})
+        body: JSON.stringify({userId, story_id ,questionId ,isCorrect , isLastQuestion})
     }).then(response => console.log('Success:'))
     if (answer) {
 
 
-        if (answer === quizData[currentQuiz].correct) {
+        if (answer === vocabQuizData[currentQuiz].correct) {
             score++
         }
 
         currentQuiz++
         console.log(currentQuiz)
-        if (currentQuiz < quizData.length) {
+        if (currentQuiz < vocabQuizData.length) {
             loadQuiz()
 
         } else {
@@ -79,7 +80,7 @@ submitBtn.addEventListener('click', () => {
 
             quiz.innerHTML = `
           
-            <h2>You answered   ${score}  / ${quizData.length} questions correctly</h2>
+            <h2>You answered   ${score}  / ${vocabQuizData.length} questions correctly</h2>
               <button onclick="location.reload()" >Reload</button>
      
             `

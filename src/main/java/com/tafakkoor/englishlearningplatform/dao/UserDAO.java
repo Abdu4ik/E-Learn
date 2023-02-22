@@ -9,12 +9,6 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UserDAO extends BaseDAO<Users, Long> {
-    private static final ThreadLocal<UserDAO> userDAOThreadLocal = ThreadLocal.withInitial(UserDAO::new);
-
-    public static UserDAO getInstance() {
-        return userDAOThreadLocal.get();
-    }
-
     public List<Users> getPage(int page, int size) {
         begin();
         TypedQuery<Users> query = em.createQuery("from Users ", Users.class);
@@ -32,7 +26,7 @@ public class UserDAO extends BaseDAO<Users, Long> {
             case "user" -> role = Roles.USER;
         }
 
-        EntityManager entityManager = getInstance().em;
+        EntityManager entityManager = em;
         entityManager.getTransaction().begin();
         int i = entityManager.createQuery("update Users set role = :role where id = :id")
                 .setParameter("role", role)
@@ -72,4 +66,23 @@ public class UserDAO extends BaseDAO<Users, Long> {
         commit();
     }
 
+    public void updateLastTestID(Integer userId, int i) {
+        begin();
+        Users user = findById(Long.valueOf(userId));
+        user.setLastTestID(i);
+        update(user);
+        commit();
+    }
+
+    public void updateScore(Integer userId, int i) {
+        begin();
+        Users users = findById(Long.valueOf(userId));
+        users.setScore(i);
+        update(users);
+        commit();
+    }
+
+    public static UserDAO getInstance() {
+        return new UserDAO();
+    }
 }

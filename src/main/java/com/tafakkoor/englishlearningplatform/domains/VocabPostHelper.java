@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuizPostHelper {
+public class VocabPostHelper {
     private Integer userId;
-    private Integer questionId;
+    private Integer story_id;
     private Integer score;
     private boolean isCorrect;
     private boolean isLastQuestion;

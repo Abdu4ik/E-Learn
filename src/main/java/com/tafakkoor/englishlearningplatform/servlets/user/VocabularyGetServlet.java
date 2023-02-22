@@ -1,11 +1,13 @@
 package com.tafakkoor.englishlearningplatform.servlets.user;
 
 import com.google.gson.Gson;
-import com.tafakkoor.englishlearningplatform.dao.QuestionDAO;
-import com.tafakkoor.englishlearningplatform.dao.VariantDAO;
-import com.tafakkoor.englishlearningplatform.domains.Questions;
-import com.tafakkoor.englishlearningplatform.domains.QuizHelper;
+import com.tafakkoor.englishlearningplatform.dao.StoryDAO;
+import com.tafakkoor.englishlearningplatform.dao.VocabularyDAO;
+import com.tafakkoor.englishlearningplatform.domains.Story;
 import com.tafakkoor.englishlearningplatform.domains.Variants;
+import com.tafakkoor.englishlearningplatform.domains.VocabHelperTest;
+import com.tafakkoor.englishlearningplatform.domains.Vocabulary;
+import com.tafakkoor.englishlearningplatform.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,41 +16,37 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-@WebServlet(name = "QuestionGetServlet", value = "/questions/get/*")
-public class QuestionGetServlet extends HttpServlet {
+@WebServlet(name = "VocabularyGetServlet", value = "/vocabulary/get/test/*")
+public class VocabularyGetServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QuestionDAO questionDAO = QuestionDAO.getInstance();
-        VariantDAO variantDAO = VariantDAO.getInstance();
+        VocabularyDAO vocabularyDAO = VocabularyDAO.getInstance();
+        StoryDAO storyDAO = StoryDAO.getInstance();
+
         String pathInfo = request.getPathInfo();
-        int grammarId = Integer.parseInt(pathInfo.substring(1));
+
         try {
-            int id = Integer.parseInt(String.valueOf(grammarId));
-            List<QuizHelper> quizHelperList = new ArrayList<>();
-            List<Questions> questionsList = questionDAO.findAllByGrammarId(id);
-            for (Questions questions : questionsList) {
-                List<Variants> variants = variantDAO.findAllByQuestionId(questions.getId());
-                QuizHelper quiz = QuizHelper.builder().
-                        question(questions.getTitle()).
-                        questionId(questions.getId()).
-                        a(variants.get(0).getVariant()).
-                        b(variants.get(1).getVariant()).
-                        c(variants.get(2).getVariant()).
-                        d(variants.get(3).getVariant()).
-                        correct(getCorrectValue(variants)).build();
-                quizHelperList.add(quiz);
-            }
+            int storyId = Integer.parseInt(pathInfo.substring(1));
+            System.out.println(storyId);
+            Story story = storyDAO.getStoryById(storyId);
+            List<Vocabulary> vocabulariesByStoryId = vocabularyDAO.getVocabulariesByStoryId(story);
+            List<VocabHelperTest> quizHelperList = new ArrayList<>();
+            List<VocabHelperTest> quiz = UserService.getQuiz(vocabulariesByStoryId, storyId, quizHelperList);
+
+            System.out.println("quiz="+quiz);
             Gson gson = new Gson();
             String jsonData = gson.toJson(quizHelperList);
-            System.out.println(quizHelperList);
             response.setContentType("application/json");
             response.getWriter().println(jsonData);
         } catch (NumberFormatException e) {
             System.out.println("Number format exception!");
         }
     }
+
+
 
     private String getCorrectValue(List<Variants> variants) {
         var a = variants.get(0).getVariant();

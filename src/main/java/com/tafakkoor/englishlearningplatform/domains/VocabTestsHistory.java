@@ -3,6 +3,7 @@ package com.tafakkoor.englishlearningplatform.domains;
 import com.tafakkoor.englishlearningplatform.domains.newStructure.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -13,19 +14,23 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class UsersTestsHistory implements BaseEntity {
+public class VocabTestsHistory implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private Integer test_id;
+    private Integer story_id;
     @Column(nullable = false)
     private Integer user_id;
     @Column(nullable = false)
-    private Integer question_id;
+    private String words;
     @Column(nullable = false)
     private boolean is_correct;
-    private Integer score;
+
+    @Column(nullable = false , columnDefinition = "boolean default false")
+    private boolean has_been_tested;
+    @CreationTimestamp
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime created_at;
+    @Builder.Default
+    private LocalDateTime created_at=LocalDateTime.now();
 }

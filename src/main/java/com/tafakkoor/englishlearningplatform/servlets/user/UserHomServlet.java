@@ -8,11 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "LevelTest", value = "/assessment")
-public class LevelTest extends HttpServlet {
+@WebServlet(name = "UserHomServlet", value = "/user")
+public class UserHomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/views/user/assesment/LevelTest.jsp").forward(request,response);
+        request.getRequestDispatcher("/views/user/index.jsp").forward(request, response);
     }
 
     @Override

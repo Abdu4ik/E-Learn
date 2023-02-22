@@ -1,13 +1,13 @@
 package com.tafakkoor.englishlearningplatform.dao;
 
 import com.tafakkoor.englishlearningplatform.domains.Story;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 public class StoryDAO extends BaseDAO<Story, Integer> {
-    private static final ThreadLocal<StoryDAO> storyDAOThreadLocal = ThreadLocal.withInitial(StoryDAO::new);
 
     public List<Story> getPage(int page, int size) {
         begin();
@@ -31,9 +31,6 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
     }
 
 
-    public static StoryDAO getInstance() {
-        return storyDAOThreadLocal.get();
-    }
 
 
     public Story getStoryWithOption( String userLevel, Integer userId ) {
@@ -55,4 +52,40 @@ public class StoryDAO extends BaseDAO<Story, Integer> {
         commit();
         return query.getResultList();
     }
+    public boolean delete( Integer id ) {
+        begin();
+        em.createNativeQuery("update story set deleted = true where id = :id;").setParameter("id", id);
+        commit();
+        return true;
+    }
+    public Story getStoryWithOption( String userLevel, Long userId ) {
+
+        begin();
+        Query query = em.createNativeQuery("select *from story where level = :level and id not in (select story_id from user_story where user_id = :userId and is_saved = true);", Story.class)
+                .setParameter("level", userLevel)
+                .setParameter("userId", userId);
+        if (query.getResultList().isEmpty()) {
+            return null;
+        }
+        Story story=(Story) query.getSingleResult();
+        commit();
+        return story;
+    }
+    public List<Story> getStoriesById(List<Integer> storyIds) {
+        begin();
+        TypedQuery<Story> query = em.createQuery("from Story s where s.deleted=false and s.id in :storyIds", Story.class);
+        query.setParameter("storyIds", storyIds);
+        commit();
+
+        return query.getResultList();
+    }
+
+    public Story getStoryById(long storyId) {
+        return em.find(Story.class, storyId);
+    }
+
+    public static StoryDAO getInstance() {
+        return new StoryDAO();
+    }
+
 }

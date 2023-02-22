@@ -8,7 +8,6 @@ import java.util.List;
 
 public class VariantDAO extends BaseDAO<Variants, Integer> {
 
-    private static final ThreadLocal<VariantDAO> variantDAOThreadLocal = ThreadLocal.withInitial(VariantDAO::new);
 
     public List<Variants> findAllByQuestionId( Integer id ) {
         begin();
@@ -18,7 +17,7 @@ public class VariantDAO extends BaseDAO<Variants, Integer> {
     }
 
     public static VariantDAO getInstance() {
-        return variantDAOThreadLocal.get();
+        return new VariantDAO();
     }
 
     public void deleteVariantsByQuestionId(Integer id) {
