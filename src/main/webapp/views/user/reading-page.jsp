@@ -19,31 +19,41 @@
 
 <div class="container mt-5">
     <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-        <tr>
-            <th>№</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Score</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${stories}" var="story">
-
+        <c:if test="${stories.size() == 0}">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">No stories found!</h4>
+                <p>There are no stories in the database. Please add stories to the database.</p>
+                <hr>
+                <p class="mb-0">If you are the admin, please add stories to the database.</p>
+            </div>
+        </c:if>
+        <c:if test="${stories.size() != 0}">
+            <thead>
             <tr>
-                <td>${i=i+1}</td>
-                <td id="title">${story.getTitle()}</td>
-                <td>${story.getAuthor()}</td>
-                <td>
-                    ${story.getScore()}
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="vocabulary/test/${story.getStoryId()}" >Start</a>
-                </td>
+                <th>№</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Score</th>
+                <th></th>
             </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${stories}" var="story">
+                <tr>
+                    <td>${i=i+1}</td>
+                    <td id="title">${story.getTitle()}</td>
+                    <td>${story.getAuthor()}</td>
+                    <td>
+                            ${story.getScore()}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="vocabulary/test/${story.getId()}">Start reading</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </c:if>
 
-        </c:forEach>
-        </tbody>
     </table>
 </div>
 

@@ -14,7 +14,6 @@ public class ReadingPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getSession().getAttribute("user_id").toString();
-        System.out.println(userId);
         List<Story> stories= UserService.getInstance().getStoryListByUserLevel(userId);
         request.setAttribute("stories", stories);
 
