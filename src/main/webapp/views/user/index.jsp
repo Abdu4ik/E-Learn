@@ -54,8 +54,8 @@
 
                     <li class="menu-has-children"><a href="#">Practises</a>
                         <ul>
-                            <li><a href="/reading-page">Reading</a></li>
-                            <li><a href="/grammar">Grammar</a></li>
+                            <li><a href="/reading-list-page">Reading</a></li>
+                            <li><a href="/grammar-list-page">Grammar</a></li>
                             <li><a href="/vocabulary">Vocabulary</a></li>
                         </ul>
 <%--                            <% if (request.getCookies() != null && Arrays.stream(request.getCookies()).anyMatch(cookie -> cookie.getName().equalsIgnoreCase("remember_me"))) { %>--%>

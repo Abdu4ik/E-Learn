@@ -1,10 +1,10 @@
 package com.tafakkoor.englishlearningplatform.dao;
 
 import com.tafakkoor.englishlearningplatform.domains.Grammar;
+import com.tafakkoor.englishlearningplatform.domains.Users;
 import jakarta.persistence.TypedQuery;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +18,6 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         commit();
         return query.getResultList();
     }
-
 
 
     public List<Grammar> findAllStories() {
@@ -36,9 +35,10 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         return query.getResultList();
 
     }
-    public Grammar getStoryWithOption( String userLevel) {
+
+    public Grammar getStoryWithOption(String userLevel) {
         begin();
-        Grammar grammar =(Grammar) em.createNativeQuery("select * from grammar where level =:userLevel order by random() limit 1", Grammar.class)
+        Grammar grammar = (Grammar) em.createNativeQuery("select * from grammar where level =:userLevel order by random() limit 1", Grammar.class)
                 .setParameter("userLevel", userLevel).getSingleResult();
         commit();
         return grammar;
@@ -46,5 +46,18 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
 
     public static GrammarDAO getInstance() {
         return new GrammarDAO();
+    }
+
+    public List<Grammar> getGrammarListByUserLevel(long id) {
+        Users user = new UserDAO().findById(id);
+        if (user == null) {
+            return new ArrayList<>();
+        }
+
+        List<Grammar> query = em.createNativeQuery(
+                        "select * from grammar s where s.level = :level and s.id not in (select grammar_id from user_story where user_id = :userId);", Grammar.class)
+                .setParameter("level", user.getLevel().name())
+                .setParameter("userId", id).getResultList();
+        return query;
     }
 }
