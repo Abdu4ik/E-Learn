@@ -30,7 +30,7 @@
 <c:set var="level" value="${user.getLevel().toString()}"/>
 <c:set var="user_id" value="${user.getId()}"/>
 <section class="py-5 my-5">
-    <form method="post" action="/user">
+    <form method="post" action="/profile">
         <div class="container">
             <h1 class="mb-5">Account Settings</h1>
             <div class="bg-white shadow rounded-lg d-block d-sm-flex">

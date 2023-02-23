@@ -85,15 +85,17 @@ public abstract class BaseDAO<T extends BaseEntity, ID extends Serializable> {
         return i > 0;
     }
 
-    public List findAll() {
+    public List<T> findAll() {
+        List<T> list;
         Query query = null;
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             query = em.createQuery("from " + persistenceClass.getSimpleName());
             System.out.println(query.toString());
+            list = query.getResultList();
             em.getTransaction().commit();
         }
-        return query.getResultList();
+        return list;
     }
 
 

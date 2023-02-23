@@ -20,7 +20,7 @@ public class UserDAO extends BaseDAO<Users, Long> {
             query.setFirstResult((page - 1) * size);
             query.setMaxResults(size);
             em.getTransaction().commit();
-            query.getResultList();
+            users = query.getResultList();
         }
         return users;
     }
