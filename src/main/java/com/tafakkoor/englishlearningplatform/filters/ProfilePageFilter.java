@@ -18,9 +18,9 @@ public class ProfilePageFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         String username = req.getParameter("username");
+        String firstname = req.getParameter("firstname");
+        String lastname = req.getParameter("lastname");
         String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirm_password");
 
         if (req.getMethod().equalsIgnoreCase("post")) {
             Map<String, String> errors = new HashMap<>();
@@ -30,12 +30,12 @@ public class ProfilePageFilter implements Filter {
                 errors.put("username_error", "Username already taken!");
             }
 
-            if (password == null || password.isBlank() || password.isEmpty()) {
+            if (firstname == null || firstname.isBlank() || firstname.isEmpty()) {
                 errors.put("pass_conf_err", "Password can not be null");
-            } else if (confirmPassword == null || confirmPassword.isBlank() || confirmPassword.isEmpty()) {
-                errors.put("pass_conf_err", "Confirm password can not be null");
-            } else if (!password.equals(confirmPassword)) {
-                errors.put("pass_conf_err", "Passwords don't match!");
+            }
+
+            if (lastname == null || lastname.isBlank() || lastname.isEmpty()) {
+                errors.put("pass_conf_err", "Lastname can not be null");
             }
 
             if (email == null || email.isBlank() || email.isEmpty()) {

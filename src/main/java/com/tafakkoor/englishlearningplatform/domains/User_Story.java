@@ -18,7 +18,7 @@ public class User_Story implements BaseEntity {
     @Column(nullable = false)
     private Integer user_id;
     private Integer story_id;
-
+    @Column(name = "grammar_id")
     private Integer grammar_id;
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean is_saved;
