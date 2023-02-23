@@ -16,6 +16,7 @@ public class GrammarListPageServlet extends HttpServlet {
         String userId = request.getSession().getAttribute("user_id").toString();
         List<Grammar>grammars= UserService.getInstance().getGrammarListByUserLevel(userId);
         request.setAttribute("grammars", grammars);
+
         request.getRequestDispatcher("/views/user/grammar-list-page.jsp").forward(request,response);
     }
 

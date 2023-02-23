@@ -24,8 +24,8 @@ public class TakeGrammarTestServlet extends HttpServlet {
 
         String userId = request.getSession().getAttribute("user_id").toString();
         request.setAttribute("userId", userId);
-        Integer grammarId = Integer.parseInt(String.valueOf(request.getAttribute("grammarId")));
-        System.out.println(grammarId);
+        Integer grammarId = Integer.parseInt(String.valueOf(request.getParameter("grammarId")));
+
         request.setAttribute("grammarId", grammarId);
 
         request.getRequestDispatcher("/views/user/take_grammar_test.jsp").forward(request, response);

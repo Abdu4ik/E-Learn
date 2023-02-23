@@ -85,7 +85,7 @@
 								Already have an account?
 							</span>
                             <b class="pointer">
-                                <a href="/login">Sign in up</a>
+                                <a href="/login">Sign in</a>
                             </b>
                         </p>
                     </div>

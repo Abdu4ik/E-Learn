@@ -32,7 +32,7 @@
             <tr>
                 <th>№</th>
                 <th>Title</th>
-                <th>Author</th>
+                <th>Level</th>
                 <th>Score</th>
                 <th>Test</th>
                 <th>Grammar</th>
@@ -43,12 +43,15 @@
                 <tr>
                     <td>${i=i+1}</td>
                     <td id="title">${grammar.getTitle()}</td>
-                    <td>${grammar.getAuthor()}</td>
+                    <td>${grammar.getLevel()}</td>
                     <td>
                             ${grammar.getScore()}
                     </td>
                     <td>
-                        <a class="btn btn-primary" href="/grammar/test">Start test</a>
+                        <form action="/grammar/test" method="get">
+                            <input type="hidden" name="grammarId" value="${grammar.getId()}">
+                            <button type="submit" class="btn btn-primary">Start test</button>
+                        </form>
                     </td>
                     <td>
                         <a class="btn btn-primary" href="/grammar">View</a>
