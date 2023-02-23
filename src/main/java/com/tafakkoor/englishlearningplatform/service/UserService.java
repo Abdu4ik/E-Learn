@@ -1,5 +1,6 @@
 package com.tafakkoor.englishlearningplatform.service;
 
+import com.tafakkoor.englishlearningplatform.dao.GrammarDAO;
 import com.tafakkoor.englishlearningplatform.dao.StoryDAO;
 import com.tafakkoor.englishlearningplatform.dao.UserDAO;
 import com.tafakkoor.englishlearningplatform.domains.*;
@@ -136,4 +137,15 @@ public class UserService {
         return "";
     }
 
+    public List<Grammar> getGrammarListByUserLevel(String userId) {
+        List<Grammar> grammars = new ArrayList<>();
+        try{
+            long id = Long.parseLong(userId);
+            GrammarDAO grammarDAO = new GrammarDAO();
+            grammars = grammarDAO.getGrammarListByUserLevel(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return grammars;
+    }
 }

@@ -1,6 +1,6 @@
-package com.tafakkoor.englishlearningplatform.servlets.user.story;
+package com.tafakkoor.englishlearningplatform.servlets.user.grammar;
 
-import com.tafakkoor.englishlearningplatform.domains.Story;
+import com.tafakkoor.englishlearningplatform.domains.Grammar;
 import com.tafakkoor.englishlearningplatform.service.UserService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -9,15 +9,14 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ReadingPageServlet", value = "/reading-page")
-public class ReadingPageServlet extends HttpServlet {
+@WebServlet(name = "GrammarListPageServlet", value = "/grammar-list-page")
+public class GrammarListPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getSession().getAttribute("user_id").toString();
-        List<Story> stories= UserService.getInstance().getStoryListByUserLevel(userId);
-        request.setAttribute("stories", stories);
-
-        request.getRequestDispatcher("/views/user/reading-page.jsp").forward(request, response);
+        List<Grammar>grammars= UserService.getInstance().getGrammarListByUserLevel(userId);
+        request.setAttribute("grammars", grammars);
+        request.getRequestDispatcher("/views/user/grammar-list-page.jsp").forward(request,response);
     }
 
     @Override
