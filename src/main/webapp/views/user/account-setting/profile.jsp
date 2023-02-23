@@ -66,6 +66,11 @@
                                     <label>Firstname</label>
                                     <input type="hidden" name="user_id" value="${user_id}">
                                     <input type="text" class="form-control" name="firstname" value="${firstname}">
+                                <div>
+                                <c:if test="${firstname_err != null}">
+                                    <snap class="small text-danger"><c:out value="${firstname_err}"></c:out></snap>
+                                </c:if>
+                            </div>
                                 </div>
                             </div>
 
@@ -73,6 +78,11 @@
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input type="text" class="form-control" name="username" value="${username}">
+                                <div>
+                                <c:if test="${username_error != null}">
+                                    <snap class="small text-danger"><c:out value="${username_error}"></c:out></snap>
+                                </c:if>
+                            </div>
                                 </div>
                             </div>
 
@@ -80,12 +90,22 @@
                                 <div class="form-group">
                                     <label>Lastname</label>
                                     <input type="text" class="form-control" name="lastname" value="${lastname}">
+                                <div>
+                                <c:if test="${lastname_err != null}">
+                                    <snap class="small text-danger"><c:out value="${date_error}"></c:out></snap>
+                                </c:if>
+                            </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="text" class="form-control" name="email" value="${email}">
+                                <div>
+                                <c:if test="${email_error != null}">
+                                    <snap class="small text-danger"><c:out value="${email_error}"></c:out></snap>
+                                </c:if>
+                            </div>
                                 </div>
                             </div>
                             <div class="col-md-6">

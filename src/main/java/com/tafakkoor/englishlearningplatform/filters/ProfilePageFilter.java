@@ -25,30 +25,26 @@ public class ProfilePageFilter implements Filter {
         if (req.getMethod().equalsIgnoreCase("post")) {
             Map<String, String> errors = new HashMap<>();
             if (username == null || username.isBlank() || username.isEmpty()) {
-                errors.put("username_error", "Username can not be null");
-            } else if (UserValidator.isDuplicateUsername(username)) {
-                errors.put("username_error", "Username already taken!");
+                errors.put("username_error", "Username can not be blank");
             }
 
             if (firstname == null || firstname.isBlank() || firstname.isEmpty()) {
-                errors.put("pass_conf_err", "Password can not be null");
+                errors.put("firstname_err", "Firstname can not be blank");
             }
 
             if (lastname == null || lastname.isBlank() || lastname.isEmpty()) {
-                errors.put("pass_conf_err", "Lastname can not be null");
+                errors.put("lastname_err", "Lastname can not be blank");
             }
 
             if (email == null || email.isBlank() || email.isEmpty()) {
-                errors.put("email_error", "Email can not be null");
-            } else if (UserValidator.isDuplicateEmail(email)) {
-                errors.put("email_error", "Email already taken");
+                errors.put("email_error", "Email can not be blank");
             }
 
             if (errors.isEmpty()) {
                 chain.doFilter(request, response);
             } else {
                 UserValidator.setErrorAttributes(req, errors);
-                req.getRequestDispatcher("views/authorization/register.jsp").forward(req, res);
+                req.getRequestDispatcher("/views/user/account-setting/profile.jsp").forward(req, res);
             }
         } else {
             chain.doFilter(request, response);
