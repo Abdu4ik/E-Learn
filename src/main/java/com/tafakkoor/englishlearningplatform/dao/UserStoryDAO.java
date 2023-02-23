@@ -11,13 +11,13 @@ public class UserStoryDAO extends BaseDAO<User_Story, Integer> {
 
 
     public boolean isSaved( Integer storyId, Integer userId ) {
-        begin();
-        User_Story user_story =(User_Story) em.createNativeQuery("select * from user_story where story_id = :story_id and user_id = :user_id;", User_Story.class)
-                .setParameter("user_id", storyId)
-                .setParameter("story_id", storyId)
-                .getSingleResult();
-        if( Objects.isNull(user_story)) return false;
-        commit();
+        try (EntityManager em = emf.createEntityManager()) {
+            User_Story user_story = (User_Story) em.createNativeQuery("select * from user_story where story_id = :story_id and user_id = :user_id;", User_Story.class)
+                    .setParameter("user_id", storyId)
+                    .setParameter("story_id", storyId)
+                    .getSingleResult();
+            if (Objects.isNull(user_story)) return false;
+        }
         return true;
     }
 
