@@ -1,7 +1,6 @@
 package com.tafakkoor.englishlearningplatform.dao;
-
-import com.tafakkoor.englishlearningplatform.domains.Questions;
 import com.tafakkoor.englishlearningplatform.domains.Variants;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
@@ -10,9 +9,10 @@ public class VariantDAO extends BaseDAO<Variants, Integer> {
 
 
     public List<Variants> findAllByQuestionId( Integer id ) {
-        begin();
-        List<Variants> variantsList = em.createNativeQuery("select * from variants where questions_id = :id", Variants.class).setParameter("id", id).getResultList();
-        commit();
+        List<Variants> variantsList;
+        try (EntityManager em = emf.createEntityManager()) {
+            variantsList = em.createNativeQuery("select * from variants where questions_id = :id", Variants.class).setParameter("id", id).getResultList();
+        }
         return variantsList;
     }
 
@@ -21,8 +21,10 @@ public class VariantDAO extends BaseDAO<Variants, Integer> {
     }
 
     public void deleteVariantsByQuestionId(Integer id) {
-        begin();
-        em.createNativeQuery("delete from variants where questions_id = :id").setParameter("id", id).executeUpdate();
-        commit();
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.createNativeQuery("delete from variants where questions_id = :id").setParameter("id", id).executeUpdate();
+            em.getTransaction().commit();
+        }
     }
 }
