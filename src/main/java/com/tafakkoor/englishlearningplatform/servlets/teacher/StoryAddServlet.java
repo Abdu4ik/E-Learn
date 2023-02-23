@@ -82,7 +82,7 @@ public class StoryAddServlet extends HttpServlet {
         StoryDAO.getInstance().save(story);
         Document savedStoryDocument = story.getDocument();
 //        CompletableFuture.runAsync(() -> {
-            VocabularyDAO vocabularyDAO = VocabularyDAO.getInstance();
+            VocabularyDAO vocabularyDAO = new VocabularyDAO();
             try {
                 for (int i = 0; i < enOptions.length; i++) {
                     vocabularyDAO.save(

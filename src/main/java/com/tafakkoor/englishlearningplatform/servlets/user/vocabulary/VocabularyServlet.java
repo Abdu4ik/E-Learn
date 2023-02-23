@@ -5,6 +5,7 @@ import com.tafakkoor.englishlearningplatform.dao.UserStoryDAO;
 import com.tafakkoor.englishlearningplatform.dao.VocabularyDAO;
 import com.tafakkoor.englishlearningplatform.domains.Story;
 import com.tafakkoor.englishlearningplatform.domains.VocabHelper;
+import com.tafakkoor.englishlearningplatform.service.TeacherService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,22 +22,21 @@ public class VocabularyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        StoryDAO storyDAO = StoryDAO.getInstance();
-        VocabularyDAO vocabularyDAO = VocabularyDAO.getInstance();
-        UserStoryDAO userStoryDAO = UserStoryDAO.getInstance();
+        TeacherService teacherService = TeacherService.getInstance();
+        UserStoryDAO userStoryDAO = new UserStoryDAO();
         try {
             Integer userId = (Integer) session.getAttribute("user_id");
 
             List<Integer> storyIds = userStoryDAO.getStoriesByUserId(userId);
 
-            List<Story> storiesById = storyDAO.getStoriesById(storyIds);
+            List<Story> storiesById = teacherService.getStoriesByIds(storyIds);
 
             List<VocabHelper> helperList = new ArrayList<>();
             storiesById.forEach(story -> {
                 helperList.add(VocabHelper.builder()
                         .storyTitle(story.getTitle())
                         .storyId(story.getId())
-                        .wordsCount(vocabularyDAO.getVocabularyCountWithOption(userId, story.getId()))
+                        .wordsCount(teacherService.getVocabularyCountWithOption(userId, story.getId()))
                         .build());
             });
 

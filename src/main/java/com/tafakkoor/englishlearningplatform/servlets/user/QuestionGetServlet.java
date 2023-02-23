@@ -6,6 +6,7 @@ import com.tafakkoor.englishlearningplatform.dao.VariantDAO;
 import com.tafakkoor.englishlearningplatform.domains.Questions;
 import com.tafakkoor.englishlearningplatform.domains.QuizHelper;
 import com.tafakkoor.englishlearningplatform.domains.Variants;
+import com.tafakkoor.englishlearningplatform.service.TeacherService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,17 +21,16 @@ import java.util.List;
 public class QuestionGetServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QuestionDAO questionDAO = QuestionDAO.getInstance();
-        VariantDAO variantDAO = VariantDAO.getInstance();
+        TeacherService teacherService =TeacherService.getInstance();
         String pathInfo = request.getPathInfo();
         int grammarId = Integer.parseInt(pathInfo.substring(1));
         System.out.println(grammarId);
         try {
             int id = Integer.parseInt(String.valueOf(grammarId));
             List<QuizHelper> quizHelperList = new ArrayList<>();
-            List<Questions> questionsList = questionDAO.findAllByGrammarId(id);
+            List<Questions> questionsList = teacherService.findAllByGrammarId(id);
             for (int i = 0; i <questionsList.size() ; i++) {
-                List<Variants> variants = variantDAO.findAllByQuestionId(questionsList.get(i).getId());
+                List<Variants> variants = teacherService.findAllByQuestionId(questionsList.get(i).getId());
                 QuizHelper quiz = QuizHelper.builder().
                         question(questionsList.get(i).getTitle()).
                         questionId(questionsList.get(i).getId()).

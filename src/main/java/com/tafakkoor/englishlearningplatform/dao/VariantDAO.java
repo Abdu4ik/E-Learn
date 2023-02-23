@@ -16,9 +16,6 @@ public class VariantDAO extends BaseDAO<Variants, Integer> {
         return variantsList;
     }
 
-    public static VariantDAO getInstance() {
-        return new VariantDAO();
-    }
 
     public void deleteVariantsByQuestionId(Integer id) {
         try (EntityManager em = emf.createEntityManager()) {

@@ -30,7 +30,7 @@ public abstract class BaseDAO<T extends BaseEntity, ID extends Serializable> {
         return t;
     }
 
-    public T findById( ID id ) {
+    public T findById(ID id ) {
         T t = null;
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();

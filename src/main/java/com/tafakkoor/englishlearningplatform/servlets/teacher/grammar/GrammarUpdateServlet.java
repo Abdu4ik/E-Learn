@@ -58,7 +58,6 @@ public class GrammarUpdateServlet extends HttpServlet {
         String level = request.getParameter("level");
         Part file = request.getPart("file");
 
-
         Integer userId = Integer.valueOf(request.getSession().getAttribute("user_id").toString());
 
         Document document = null;

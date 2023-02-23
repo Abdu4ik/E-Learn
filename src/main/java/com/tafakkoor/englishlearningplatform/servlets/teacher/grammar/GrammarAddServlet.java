@@ -1,6 +1,6 @@
 package com.tafakkoor.englishlearningplatform.servlets.teacher.grammar;
 
-import com.tafakkoor.englishlearningplatform.dao.GrammarDAO;
+
 import com.tafakkoor.englishlearningplatform.domains.Document;
 import com.tafakkoor.englishlearningplatform.domains.Grammar;
 import com.tafakkoor.englishlearningplatform.domains.Questions;
@@ -47,6 +47,7 @@ public class GrammarAddServlet extends HttpServlet {
         String title = request.getParameter("title");
         String score = request.getParameter("score");
         String level = request.getParameter("level");
+        TeacherService teacherService = TeacherService.getInstance();
         Integer userId = Integer.parseInt(request.getSession().getAttribute("user_id").toString());
 
         Part file = request.getPart("file");
@@ -67,7 +68,7 @@ public class GrammarAddServlet extends HttpServlet {
                 .document(document)
                 .createdBy(userId) // TODO: 2/16/2023 admin id ni qo'shish kerak  qushdim
                 .build();
-        new GrammarDAO().save(grammar);
+        teacherService.saveGrammar(grammar);
 
         String option1 = request.getParameter("option1");
         String option2 = request.getParameter("option2");
@@ -84,8 +85,6 @@ public class GrammarAddServlet extends HttpServlet {
         TeacherService.getInstance().saveQuestion(questions);
 
         saveQuestionOptions(questions, correctAnswer, option1, option2, option3, option4);
-
-
         response.sendRedirect("/teacher/grammar/list");
     }
 

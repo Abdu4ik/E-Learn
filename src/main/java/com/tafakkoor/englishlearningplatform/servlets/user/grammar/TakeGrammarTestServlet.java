@@ -42,7 +42,7 @@ public class TakeGrammarTestServlet extends HttpServlet {
         System.out.println("qph = " + qph);
         Integer userId = qph.getUserId();
         System.out.println("userId = " + userId);
-        Users user = UserDAO.getInstance().findById(Long.valueOf(userId));
+        Users user = new UserDAO().findById(Long.valueOf(userId));
         Integer lastTestID = user.getLastTestID();
         System.out.println("lastTestID = " + lastTestID);
         System.out.println("qph.isCorrect() = " + qph.isCorrect());
@@ -51,9 +51,9 @@ public class TakeGrammarTestServlet extends HttpServlet {
         if (qph.isCorrect()) {
             score = score + 1;
             System.out.println("qph.isCorrect() = " + qph.isCorrect());
-            UserDAO.getInstance().updateScore(userId, user.getScore() + 1);
+            new UserDAO().updateScore(userId, user.getScore() + 1);
         }
-        UserTestHistoryDao.getInstance().save(UsersTestsHistory.builder()
+        new UserTestHistoryDao().save(UsersTestsHistory.builder()
                 .test_id(lastTestID + 1)
                 .user_id(userId)
                 .is_correct(qph.isCorrect())
@@ -62,7 +62,7 @@ public class TakeGrammarTestServlet extends HttpServlet {
                 .build());
         if (qph.isLastQuestion()) {
             System.out.println("qph.isLastQuestion() = " + qph.isLastQuestion());
-            UserDAO.getInstance().updateLastTestID(userId, lastTestID + 1);
+            new UserDAO().updateLastTestID(userId, lastTestID + 1);
         }
     }
 

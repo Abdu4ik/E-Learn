@@ -31,8 +31,4 @@ public class UserStoryDAO extends BaseDAO<User_Story, Integer> {
         }
         return storyIds;
     }
-
-    public static UserStoryDAO getInstance() {
-        return new UserStoryDAO();
-    }
 }

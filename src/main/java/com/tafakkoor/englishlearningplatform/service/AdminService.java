@@ -17,21 +17,21 @@ public class AdminService {
 
     public  List<Users> usersList(Integer page, Integer size) {
         // todo check page and size
-        List<Users> users = UserDAO.getInstance().getPage(page, size);
+        List<Users> users = new UserDAO().getPage(page, size);
         return users;
     }
 
 
     public boolean changeRole(Integer id, String role) {
         //todo check role is valid
-        boolean result = UserDAO.getInstance().changeRole(id, role);
+        boolean result = new UserDAO().changeRole(id, role);
         return result;
     }
 
     public boolean changeDeleted(Integer userId, boolean deleted) {
 
         //todo check userId  is valid
-        boolean result = UserDAO.getInstance().changeDeleted(Long.valueOf(userId), deleted);
+        boolean result = new UserDAO().changeDeleted(Long.valueOf(userId), deleted);
         return result;
     }
 }

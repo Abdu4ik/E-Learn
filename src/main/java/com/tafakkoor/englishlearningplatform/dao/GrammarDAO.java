@@ -53,10 +53,6 @@ public class GrammarDAO extends BaseDAO<Grammar, Integer> {
         return grammar;
     }
 
-    public static GrammarDAO getInstance() {
-        return new GrammarDAO();
-    }
-
     public List<Grammar> getGrammarListByUserLevel(long id) {
         Users user = new UserDAO().findById(id);
         if (user == null) {

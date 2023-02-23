@@ -54,7 +54,7 @@ public class UserValidator {
 
     // check for duplicate username
     public static boolean isDuplicateUsername(String username) {
-        List<Users> users = UserDAO.getInstance().findAll();
+        List<Users> users = new UserDAO().findAll();
         for (Users user : users) {
             if (user.getUsername().equals(username)) {
                 return true;
@@ -65,7 +65,7 @@ public class UserValidator {
 
     // check for duplicate email
     public static boolean isDuplicateEmail(String email) {
-        List<Users> users = UserDAO.getInstance().findAll();
+        List<Users> users = new UserDAO().findAll();
         for (Users user : users) {
             if (user.getEmail().equalsIgnoreCase(email)) {
                 return true;

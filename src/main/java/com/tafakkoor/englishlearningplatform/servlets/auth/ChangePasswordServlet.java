@@ -17,9 +17,10 @@ public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        UserService userService = UserService.getInstance();
 //        response.setBufferSize(1024 * 16);
         Long userId = Long.parseLong((session.getAttribute("user_id").toString()));
-        Users user = UserDAO.getInstance().findById(userId);
+        Users user = userService.findById(userId);
         request.setAttribute("fullname", user.getFirstName() + " " + user.getLastName());
 //        request.setAttribute("user", user);
         request.setAttribute("user_id", user.getId());
@@ -37,7 +38,7 @@ public class ChangePasswordServlet extends HttpServlet {
             String userId = request.getParameter("user_id");
             String newPassword = request.getParameter("new_password");
 
-            UserDAO instance = UserDAO.getInstance();
+            UserDAO instance = new UserDAO();
             Users user = instance.findById(Long.parseLong(userId));
             user.setPassword(Encrypt.hashPassword(newPassword));
             instance.update(user);

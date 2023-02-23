@@ -7,8 +7,10 @@ import com.tafakkoor.englishlearningplatform.utils.validator.QuestionValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 import static java.lang.ThreadLocal.withInitial;
 
@@ -92,10 +94,13 @@ public class TeacherService {
         return questionDAO.findById(questionId);
     }
 
+    public Document findGrammarById(Integer id){
+        DocumentDAO documentDAO = new DocumentDAO();
+        return documentDAO.findById(id);
+    }
+
     public List<Variants> getVariantsByQuestionId(int id) {
-
-        Questions questions=new Questions();
-
+        
         return new VariantDAO().findAllByQuestionId(id);
     }
 
@@ -134,5 +139,69 @@ public class TeacherService {
     public void saveStory(Story story) {
         StoryDAO storyDAO = new StoryDAO();
         storyDAO.save(story);
+    }
+
+
+
+    public Grammar saveGrammar( @NonNull Grammar grammar ) {
+        GrammarDAO grammarDAO = new GrammarDAO();
+        Grammar gram = null;
+
+        try {
+            gram = grammarDAO.save(grammar);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        return gram;
+    }
+
+    public Grammar getGrammarWithOption(@NonNull String userLevel ) {
+        GrammarDAO grammarDAO = new GrammarDAO();
+        Grammar gram = null;
+        try {
+            gram = grammarDAO.getStoryWithOption(userLevel);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        return gram;
+    }
+
+    public Story getStoryWithOption( String name, Long userId ) {
+        StoryDAO storyDAO = new StoryDAO();
+        return storyDAO.getStoryWithOption(name, userId);
+    }
+
+    public List<Vocabulary> getVocabulariesByStoryId(@NonNull Story storyWithOption ) {
+        VocabularyDAO vocabularyDAO = new VocabularyDAO();
+        return vocabularyDAO.getVocabulariesByStoryId(storyWithOption);
+    }
+
+    public Story findStoryById( int storyId ) {
+        StoryDAO storyDAO = new StoryDAO();
+        return storyDAO.findById(storyId);
+    }
+
+    public List<Story> getStoriesByIds(@NonNull List<Integer> storyIds ) {
+        StoryDAO storyDAO = new StoryDAO();
+        return storyDAO.getStoriesById(storyIds);
+    }
+
+    public Integer getVocabularyCountWithOption( Integer userId, Integer id ) {
+        VocabularyDAO vocabularyDAO = new VocabularyDAO();
+        return vocabularyDAO.getVocabularyCountWithOption(userId, id);
+    }
+
+    public List<Questions> findAllByGrammarId( int id ) {
+        QuestionDAO questionDAO = new QuestionDAO();
+        return questionDAO.findAllByGrammarId(id);
+    }
+
+    public List<Variants> findAllByQuestionId( Integer id ) {
+        VariantDAO variantDAO = new VariantDAO();
+        return variantDAO.findAllByQuestionId(id);
+    }
+
+    public Users findUserById( long userId ) {
+        return new UserDAO().findById(userId);
     }
 }

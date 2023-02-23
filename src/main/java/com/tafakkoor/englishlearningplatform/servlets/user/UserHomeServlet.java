@@ -1,6 +1,7 @@
 package com.tafakkoor.englishlearningplatform.servlets.user;
 
 import com.tafakkoor.englishlearningplatform.dao.UserDAO;
+import com.tafakkoor.englishlearningplatform.service.TeacherService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +16,7 @@ public class UserHomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getSession().getAttribute("user_id").toString();
         if (userId != null){
-            String userLevel = UserDAO.getInstance().findById(Long.parseLong(userId)).getLevel().toString();
+            String userLevel = TeacherService.getInstance().findUserById(Long.parseLong(userId)).getLevel().toString();
             request.getSession().setAttribute("userLevel", userLevel);
         }
 

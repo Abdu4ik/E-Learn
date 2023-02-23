@@ -31,9 +31,6 @@ public class VocabularyDAO extends BaseDAO<Vocabulary, Integer> {
         return size;
     }
 
-    public static VocabularyDAO getInstance() {
-        return new VocabularyDAO();
-    }
 
 
     public boolean hasWord(String eWord, String uWord) {

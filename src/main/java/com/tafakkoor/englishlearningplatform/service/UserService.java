@@ -46,7 +46,7 @@ public class UserService {
                 .password(Encrypt.hashPassword(password))
                 .build();
 
-        UserDAO.getInstance().save(newUser);
+        new UserDAO().save(newUser);
         response.sendRedirect("/login");
     }
 
@@ -57,7 +57,7 @@ public class UserService {
     public boolean isCorrectPass(String userId, String password) {
         Users user = null;
         try {
-            user = UserDAO.getInstance().findById(Long.parseLong(userId));
+            user = new UserDAO().findById(Long.parseLong(userId));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class UserService {
         String userId = request.getParameter("user_id");
         String newPassword = request.getParameter("new_password");
 
-        UserDAO instance = UserDAO.getInstance();
+        UserDAO instance = new UserDAO();
         Users user = instance.findById(Long.parseLong(userId));
         user.setPassword(Encrypt.hashPassword(newPassword));
         instance.update(user);
@@ -137,6 +137,30 @@ public class UserService {
         return "";
     }
 
+    public Users findById(Long id){
+        UserDAO userDAO = new UserDAO();
+        Users user = null;
+        try{
+            user = userDAO.findById(id);
+        }catch ( Exception e ){
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+
+
+    public Users findByUsername(String username){
+        UserDAO userDAO = new UserDAO();
+        Users user = null;
+        try{
+            user = userDAO.findByUsername(username);
+        }catch ( Exception e ){
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public List<Grammar> getGrammarListByUserLevel(String userId) {
         List<Grammar> grammars = new ArrayList<>();
         try{
@@ -147,5 +171,10 @@ public class UserService {
             e.printStackTrace();
         }
         return grammars;
+    }
+
+    public boolean update( Users user ) {
+        UserDAO userDAO = new UserDAO();
+        return userDAO.update(user);
     }
 }

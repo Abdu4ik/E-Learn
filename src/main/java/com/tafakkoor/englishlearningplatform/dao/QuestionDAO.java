@@ -18,8 +18,4 @@ public class QuestionDAO extends BaseDAO<Questions, Integer> {
         return questionsList;
     }
 
-    public static QuestionDAO getInstance() {
-        return new QuestionDAO();
-    }
-
 }

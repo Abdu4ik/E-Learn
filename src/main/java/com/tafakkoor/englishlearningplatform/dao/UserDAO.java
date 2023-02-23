@@ -43,7 +43,6 @@ public class UserDAO extends BaseDAO<Users, Long> {
             em.getTransaction().commit();
         }
         return i > 0;
-
     }
 
     public List<Users> findAll() {
@@ -101,7 +100,4 @@ public class UserDAO extends BaseDAO<Users, Long> {
         }
     }
 
-    public static UserDAO getInstance() {
-        return new UserDAO();
-    }
 }
