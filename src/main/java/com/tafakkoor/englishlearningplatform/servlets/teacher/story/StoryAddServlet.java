@@ -24,10 +24,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "StoryAddServlet", value = "/teacher/story/add")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
+@MultipartConfig(location = "c:\\E-Learn\\uploads\\stories")
 public class StoryAddServlet extends HttpServlet {
     public static final String projectPath = System.getProperty("user.dir");
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/E-Learn/uploads/stories");
 
     @Override
     public void init() throws ServletException {

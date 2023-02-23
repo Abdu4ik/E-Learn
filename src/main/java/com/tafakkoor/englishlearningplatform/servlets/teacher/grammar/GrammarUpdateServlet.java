@@ -1,14 +1,17 @@
 package com.tafakkoor.englishlearningplatform.servlets.teacher.grammar;
 
-import com.tafakkoor.englishlearningplatform.dao.GrammarDAO;
 import com.tafakkoor.englishlearningplatform.domains.Document;
 import com.tafakkoor.englishlearningplatform.domains.Grammar;
 import com.tafakkoor.englishlearningplatform.domains.Questions;
 import com.tafakkoor.englishlearningplatform.enums.Levels;
 import com.tafakkoor.englishlearningplatform.service.TeacherService;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,9 +20,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 @WebServlet(name = "GrammarUpdateServlet", value = "/teacher/grammar/update/*")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
+@MultipartConfig(location = "c:\\E-Learn\\uploads\\grammars")
 public class GrammarUpdateServlet extends HttpServlet {
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/E-Learn/uploads/grammars");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,16 +58,19 @@ public class GrammarUpdateServlet extends HttpServlet {
         String level = request.getParameter("level");
         Part file = request.getPart("file");
 
-        Document document =null;
-        if (file!=null && file.getSize() > 0) {
+
+        Integer userId = Integer.valueOf(request.getSession().getAttribute("user_id").toString());
+
+        Document document = null;
+        if (file != null && file.getSize() > 0) {
             String originalName = file.getSubmittedFileName();
             String extension = originalName.substring(originalName.lastIndexOf("."));
             String generatedName = UUID.randomUUID() + extension;
             Document.builder()
                     .generatedFileName(generatedName)
                     .originalFileName(originalName)
-                    .filePath("uploads/files/stories/" + generatedName)
-                    .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
+                    .filePath(rootPath + "/" + generatedName)
+                    .createdBy(userId) // TODO: 2/16/2023 admin id ni qo'shish kerak  qushdim
                     .build();
             file.write(generatedName);
         }
@@ -73,7 +79,7 @@ public class GrammarUpdateServlet extends HttpServlet {
         grammar.setScore(Objects.requireNonNullElse(Integer.valueOf(score), grammar.getScore()));
         grammar.setLevel(Objects.requireNonNullElse(Levels.valueOf(level), grammar.getLevel()));
         grammar.setDocument(Objects.requireNonNullElse(document, grammar.getDocument()));
-        grammar.setCreatedBy(Objects.requireNonNullElse(1, grammar.getCreatedBy())); // TODO: 2/16/2023 admin id ni qo'shish kerak
+        grammar.setCreatedBy(Objects.requireNonNullElse(userId, grammar.getCreatedBy())); // TODO: 2/16/2023 admin id ni qo'shish kerak  qushdim
 
         teacherService.updateGrammar(grammar);
 

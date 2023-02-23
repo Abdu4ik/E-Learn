@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.UUID;
 
 @WebServlet(name = "GrammarAddServlet", value = "/teacher/grammar/add")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
+@MultipartConfig(location = "c:\\E-Learn\\uploads\\grammars")
 public class GrammarAddServlet extends HttpServlet {
     public static final String projectPath = System.getProperty("user.dir");
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/E-Learn/uploads/grammars");
 
     @Override
     public void init() throws ServletException {
@@ -47,6 +47,7 @@ public class GrammarAddServlet extends HttpServlet {
         String title = request.getParameter("title");
         String score = request.getParameter("score");
         String level = request.getParameter("level");
+        Integer userId = Integer.parseInt(request.getSession().getAttribute("user_id").toString());
 
         Part file = request.getPart("file");
         String originalName = file.getSubmittedFileName();
@@ -56,7 +57,7 @@ public class GrammarAddServlet extends HttpServlet {
                 .generatedFileName(generatedName)
                 .originalFileName(originalName)
                 .filePath("uploads/files/stories/" + generatedName)
-                .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
+                .createdBy(userId) // TODO: 2/16/2023 admin id ni qo'shish kerak  qushdim
                 .build();
         file.write(generatedName);
         Grammar grammar = Grammar.builder()
@@ -64,7 +65,7 @@ public class GrammarAddServlet extends HttpServlet {
                 .score(Integer.parseInt(score))
                 .level(Levels.valueOf(level))
                 .document(document)
-                .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
+                .createdBy(userId) // TODO: 2/16/2023 admin id ni qo'shish kerak  qushdim
                 .build();
         new GrammarDAO().save(grammar);
 

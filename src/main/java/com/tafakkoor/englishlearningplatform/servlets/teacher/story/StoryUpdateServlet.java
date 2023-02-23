@@ -18,10 +18,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 @WebServlet(name = "ServletStoryUpdateServlet", value = "/teacher/story/update/*")
-@MultipartConfig(location = "c:\\pdp\\BOOTCAMP\\jakarta\\E-Learn\\src\\main\\webapp\\uploads\\files\\stories")
+@MultipartConfig(location = "c:\\E-Learn\\uploads\\stories")
 public class StoryUpdateServlet extends HttpServlet {
 
-    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/pdp/BOOTCAMP/jakarta/E-Learn/src/main/webapp/uploads/files/stories");
+    private static final Path rootPath = Path.of(System.getProperty("user.home"), "/E-Learn/uploads/stories");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,7 +56,7 @@ public class StoryUpdateServlet extends HttpServlet {
         String author = request.getParameter("author");
         String score = request.getParameter("score");
         String level = request.getParameter("level");
-
+        Integer userId = Integer.valueOf(request.getSession().getAttribute("user_id").toString());
         String[] enOptions = request.getParameterValues("en_options[]");
         String[] uzOptions = request.getParameterValues("uz_options[]");
 
@@ -72,8 +72,8 @@ public class StoryUpdateServlet extends HttpServlet {
             document = Document.builder()
                     .generatedFileName(generatedName)
                     .originalFileName(originalName)
-                    .filePath("uploads/files/stories/" + generatedName)
-                    .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
+                    .filePath(rootPath + "/" + generatedName)
+                    .createdBy(userId) // TODO: 2/16/2023 admin id ni qo'shish kerak   qushdim
                     .build();
             file.write(generatedName);
         }
@@ -101,7 +101,7 @@ public class StoryUpdateServlet extends HttpServlet {
                                     .word(enOptions[i])
                                     .meaning(uzOptions[i])
                                     .story(story)
-                                    .createdBy(1) // TODO: 2/16/2023 admin id ni qo'shish kerak
+                                    .createdBy(userId) // TODO: 2/16/2023 admin id ni qo'shish kerak  qushdim
                                     .build()
                     );
                 }
@@ -109,8 +109,7 @@ public class StoryUpdateServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        });
-        response.sendRedirect("/teacher/story/list");
 
+        response.sendRedirect("/teacher/story/list");
     }
 }
