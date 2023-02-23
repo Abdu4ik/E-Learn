@@ -12,31 +12,36 @@ import java.util.List;
 public class GrammarDAO extends BaseDAO<Grammar, Integer> {
 
     public List<Grammar> getPage(int page, int size) {
+        List<Grammar> grammars = new ArrayList<>();
         TypedQuery<Grammar> query;
         try (EntityManager em = emf.createEntityManager()) {
             query = em.createQuery("from Grammar ", Grammar.class);
             query.setFirstResult((page - 1) * size);
             query.setMaxResults(size);
+            grammars = query.getResultList();
         }
-        return query.getResultList();
+        return grammars;
     }
 
 
     public List<Grammar> findAllStories() {
+        List<Grammar> grammars = new ArrayList<>();
         TypedQuery<Grammar> query;
         try (EntityManager em = emf.createEntityManager()) {
             query = em.createQuery("from Grammar s where s.deleted=false order by createdAt desc", Grammar.class);
+            grammars = query.getResultList();
         }
-        return query.getResultList();
+        return grammars;
     }
 
     public List<Grammar> findAllGrammars() {
+        List<Grammar> grammars = new ArrayList<>();
         TypedQuery<Grammar> query;
         try (EntityManager em = emf.createEntityManager()) {
             query = em.createQuery("from Grammar s where s.deleted=false order by createdAt desc", Grammar.class);
+            grammars = query.getResultList();
         }
-        return query.getResultList();
-
+        return grammars;
     }
 
     public Grammar getStoryWithOption(String userLevel) {

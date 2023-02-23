@@ -12,6 +12,7 @@ import java.util.List;
 
 public class UserDAO extends BaseDAO<Users, Long> {
     public List<Users> getPage(int page, int size) {
+        List<Users> users = new ArrayList<>();
         TypedQuery<Users> query;
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
@@ -19,8 +20,9 @@ public class UserDAO extends BaseDAO<Users, Long> {
             query.setFirstResult((page - 1) * size);
             query.setMaxResults(size);
             em.getTransaction().commit();
+            query.getResultList();
         }
-        return query.getResultList();
+        return users;
     }
 
     public boolean changeRole(Integer id, String path) {
