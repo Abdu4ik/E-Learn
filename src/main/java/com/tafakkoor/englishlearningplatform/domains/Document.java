@@ -25,8 +25,6 @@ public class Document implements BaseEntity {
     private String generatedFileName;
     @Column(nullable = false)
     private String originalFileName;
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean deleted;
     @Column(nullable = false)
     private Integer createdBy;
     @CreationTimestamp

@@ -19,7 +19,6 @@ import java.util.Objects;
 @Entity
 @Builder
 @AllArgsConstructor
-
 public class Users implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

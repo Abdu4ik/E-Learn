@@ -316,3 +316,4 @@ function update(student_id) {
 
         }
     );
+}
